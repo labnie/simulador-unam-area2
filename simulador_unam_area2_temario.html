@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador UNAM Área 2 — Temario Completo</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul: #0d1b4b;
+  --azul-m: #162260;
+  --azul-c: #1e3280;
+  --oro: #c9a84c;
+  --oro-c: #e8c97a;
+  --crema: #f5f2eb;
+  --blanco: #fff;
+  --gris: #6b7280;
+  --ok: #14532d; --ok-bg: #dcfce7;
+  --err: #991b1b; --err-bg: #fee2e2;
+  --sombra: 0 8px 32px rgba(0,0,0,0.22);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--azul);background-image:radial-gradient(ellipse at 15% 20%,rgba(201,168,76,.10) 0%,transparent 55%),radial-gradient(ellipse at 85% 80%,rgba(30,50,128,.5) 0%,transparent 55%);min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:24px 16px;color:#1a1a2e;}
+
+/* ── PORTADA ── */
+#portada{max-width:700px;width:100%;margin:auto;animation:up .7s ease both;}
+.p-card{background:var(--crema);border-radius:6px;overflow:hidden;box-shadow:var(--sombra);}
+.p-head{background:linear-gradient(160deg,var(--azul-m),var(--azul));padding:32px 36px 24px;border-bottom:3px solid var(--oro);text-align:center;}
+.p-head h1{font-family:'Libre Baskerville',serif;color:var(--oro-c);font-size:1.65rem;line-height:1.3;margin-bottom:6px;}
+.p-head .sub{color:rgba(255,255,255,.6);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;}
+.p-body{padding:28px 32px;}
+.badge{display:inline-block;background:var(--azul);color:var(--oro-c);padding:5px 13px;border-radius:20px;font-size:.76rem;letter-spacing:.04em;margin:3px;}
+.aviso{background:rgba(13,27,75,.07);border-left:4px solid var(--azul-c);padding:13px 16px;border-radius:0 4px 4px 0;font-size:.87rem;color:#1e2d5a;line-height:1.6;margin:18px 0;}
+.mats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 22px;}
+.mat-btn{background:var(--blanco);border:2px solid #d4cfc5;border-radius:6px;padding:16px 13px;cursor:pointer;transition:all .2s;text-align:left;}
+.mat-btn:hover{border-color:var(--oro);background:rgba(13,27,75,.04);transform:translateY(-2px);box-shadow:0 4px 14px rgba(13,27,75,.12);}
+.mat-btn .ico{font-size:20px;display:block;margin-bottom:6px;}
+.mat-btn .tit{font-family:'Libre Baskerville',serif;font-size:.9rem;color:var(--azul);font-weight:700;margin-bottom:3px;line-height:1.3;}
+.mat-btn .inf{font-size:.76rem;color:var(--gris);}
+.btn-all{width:100%;background:linear-gradient(135deg,var(--azul),var(--azul-m));color:var(--oro-c);border:2px solid var(--oro);padding:15px;border-radius:5px;font-family:'Libre Baskerville',serif;font-size:.98rem;cursor:pointer;letter-spacing:.04em;transition:all .25s;}
+.btn-all:hover{background:linear-gradient(135deg,var(--azul-m),var(--azul-c));box-shadow:0 6px 20px rgba(201,168,76,.28);}
+
+/* ── EXAMEN ── */
+#examen{display:none;max-width:820px;width:100%;margin:auto;}
+.ex-head{background:var(--crema);border-radius:6px 6px 0 0;padding:13px 22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:2px solid var(--oro);}
+.ex-tit{font-family:'Libre Baskerville',serif;font-size:.88rem;color:var(--azul);}
+.timer{background:linear-gradient(135deg,var(--azul),var(--azul-m));color:var(--oro);padding:6px 16px;border-radius:4px;font-family:'Libre Baskerville',serif;font-size:1.2rem;letter-spacing:.1em;min-width:78px;text-align:center;}
+.timer.urg{color:#ff6b6b;animation:pulso .8s infinite;}
+.prog-wrap{height:5px;background:rgba(13,27,75,.1);}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--azul-c),var(--oro));transition:width .4s;}
+.prog-info{background:var(--crema);padding:7px 22px;font-size:.77rem;color:var(--gris);display:flex;justify-content:space-between;align-items:center;border-left:1px solid rgba(201,168,76,.25);border-right:1px solid rgba(201,168,76,.25);}
+.mat-tag{background:var(--azul);color:var(--oro-c);padding:2px 10px;border-radius:20px;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;}
+.q-card{background:var(--crema);border:1px solid rgba(201,168,76,.22);border-top:none;border-radius:0 0 6px 6px;padding:30px 30px 22px;min-height:460px;display:flex;flex-direction:column;box-shadow:var(--sombra);animation:up .3s ease both;}
+.num-q{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gris);margin-bottom:10px;}
+.texto-q{font-family:'Libre Baskerville',serif;font-size:1.04rem;line-height:1.78;color:#111;margin-bottom:24px;}
+.figura{margin:14px auto 4px;background:#fff;border:1.5px solid #d4cfc5;border-radius:6px;padding:10px;display:flex;justify-content:center;align-items:center;overflow-x:auto;}
+.figura svg{max-width:100%;height:auto;display:block;}
+.opciones{display:flex;flex-direction:column;gap:9px;flex:1;}
+.opcion{display:flex;align-items:flex-start;gap:13px;background:var(--blanco);border:1.5px solid #ddd8cc;border-radius:5px;padding:12px 15px;cursor:pointer;transition:all .18s;font-size:.93rem;line-height:1.5;color:#222;}
+.opcion:hover{border-color:var(--oro);background:rgba(13,27,75,.04);}
+.opcion.sel{border-color:var(--azul);background:rgba(13,27,75,.06);}
+.opcion.ok{border-color:var(--ok);background:var(--ok-bg);color:var(--ok);}
+.opcion.err{border-color:var(--err);background:var(--err-bg);color:var(--err);}
+.letra{min-width:27px;height:27px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:.77rem;flex-shrink:0;opacity:.65;}
+.opcion.sel .letra,.opcion.ok .letra,.opcion.err .letra{opacity:1;}
+.fb{margin-top:15px;padding:12px 15px;border-radius:5px;font-size:.87rem;line-height:1.6;display:none;}
+.fb.ok{display:block;background:var(--ok-bg);border-left:4px solid var(--ok);color:#14532d;}
+.fb.err{display:block;background:var(--err-bg);border-left:4px solid var(--err);color:#7f1d1d;}
+.ctrl{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:10px;flex-wrap:wrap;}
+.pts{font-size:.8rem;color:var(--gris);}
+.btn{padding:10px 24px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:.88rem;cursor:pointer;transition:all .2s;border:1.5px solid transparent;}
+.btn-skip{background:transparent;border-color:#ccc;color:var(--gris);}
+.btn-skip:hover{border-color:var(--azul);color:var(--azul);}
+.btn-next{background:linear-gradient(135deg,var(--azul),var(--azul-m));color:var(--oro-c);border-color:var(--azul);font-weight:600;}
+.btn-next:hover{background:linear-gradient(135deg,var(--azul-m),var(--azul-c));box-shadow:0 4px 14px rgba(13,27,75,.32);}
+.btn-next:disabled{opacity:.35;cursor:not-allowed;}
+
+/* ── RESULTADOS ── */
+#resultados{display:none;max-width:700px;width:100%;margin:auto;animation:up .6s ease both;}
+.r-card{background:var(--crema);border-radius:6px;overflow:hidden;box-shadow:var(--sombra);}
+.r-head{background:linear-gradient(160deg,var(--azul-m),var(--azul));padding:34px 30px 26px;text-align:center;border-bottom:3px solid var(--oro);}
+.r-head .ins{font-size:50px;display:block;margin-bottom:8px;}
+.r-head h2{font-family:'Libre Baskerville',serif;color:var(--oro-c);font-size:1.25rem;margin-bottom:4px;}
+.r-head .sub2{color:rgba(255,255,255,.55);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;}
+.r-body{padding:28px 30px;}
+.calif{text-align:center;font-family:'Libre Baskerville',serif;font-size:5rem;color:var(--azul);line-height:1;margin:8px 0 4px;}
+.calif span{color:var(--oro);font-size:2.3rem;}
+.msg{text-align:center;font-size:.93rem;color:#444;font-style:italic;margin-bottom:22px;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;}
+.stat{background:linear-gradient(135deg,var(--azul),var(--azul-m));border-radius:5px;padding:15px 8px;text-align:center;color:var(--crema);}
+.stat .n{font-family:'Libre Baskerville',serif;font-size:1.7rem;color:var(--oro);display:block;}
+.stat .l{font-size:.68rem;letter-spacing:.06em;opacity:.65;text-transform:uppercase;margin-top:2px;}
+.des h3{font-family:'Libre Baskerville',serif;font-size:.97rem;color:var(--azul);border-bottom:1px solid var(--oro);padding-bottom:7px;margin-bottom:12px;}
+.mat-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(0,0,0,.05);font-size:.83rem;}
+.mat-nom{min-width:120px;color:#333;}
+.mb-wrap{flex:1;height:6px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden;}
+.mb{height:100%;background:linear-gradient(90deg,var(--azul-c),var(--oro));border-radius:3px;transition:width 1s ease;}
+.mat-sc{min-width:42px;text-align:right;font-weight:600;color:var(--azul);font-size:.8rem;}
+.btns-r{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+.btn-ret{flex:1;background:linear-gradient(135deg,var(--azul),var(--azul-m));color:var(--oro-c);border:2px solid var(--oro);padding:12px;border-radius:4px;font-family:'Libre Baskerville',serif;font-size:.92rem;cursor:pointer;transition:all .2s;text-align:center;}
+.btn-ret:hover{background:linear-gradient(135deg,var(--azul-m),var(--azul-c));}
+.btn-men{flex:1;background:transparent;color:var(--azul);border:2px solid var(--azul-c);padding:12px;border-radius:4px;font-family:'Libre Baskerville',serif;font-size:.92rem;cursor:pointer;transition:all .2s;text-align:center;}
+.btn-men:hover{background:rgba(13,27,75,.05);}
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulso{0%,100%{opacity:1}50%{opacity:.4}}
+@media(max-width:540px){.q-card,.r-body,.p-body{padding:20px 14px;}.mats-grid{grid-template-columns:1fr;}.calif{font-size:3.8rem;}.ctrl{flex-direction:column;align-items:stretch;}.btn{text-align:center;}}
+</style>
+</head>
+<body>
+
+<!-- ══ PORTADA ══ -->
+<div id="portada">
+  <div class="p-card">
+    <div class="p-head">
+      <h1>Simulador por Temario</h1>
+      <p class="sub">UNAM · Área 2 · Ciencias Biológicas, Químicas y de la Salud</p>
+    </div>
+    <div class="p-body">
+      <div class="aviso">
+        📚 <strong>Este simulador</strong> está basado en los <em>temas y subtemas del temario oficial</em> de la Guía UNAM Área 2 (ed. noviembre 2025). Las preguntas son <strong>nuevas</strong> y cubren todo el temario, no son las del examen muestra. Ideal para estudiar antes del examen.
+      </div>
+      <div style="margin-bottom:14px;">
+        <span class="badge">⏱ Tiempo libre</span>
+        <span class="badge">📝 120 reactivos nuevos</span>
+        <span class="badge">📚 9 materias</span>
+        <span class="badge">🎯 Basado en temario oficial</span>
+      </div>
+      <p style="font-size:.86rem;color:#555;margin-bottom:16px;line-height:1.6;">Practica por materia o lanza el examen completo:</p>
+      <div class="mats-grid">
+        <button class="mat-btn" onclick="iniciar(0)"><span class="ico">⚡</span><div class="tit">Física</div><div class="inf">13 reactivos · Cinemática, Dinámica, Termodinámica, Ondas, Electromagnetismo</div></button>
+        <button class="mat-btn" onclick="iniciar(1)"><span class="ico">📖</span><div class="tit">Literatura</div><div class="inf">10 reactivos · Géneros, corrientes, figuras retóricas, fichas</div></button>
+        <button class="mat-btn" onclick="iniciar(2)"><span class="ico">🧪</span><div class="tit">Química</div><div class="inf">13 reactivos · Átomo, enlaces, reacciones, bioquímica</div></button>
+        <button class="mat-btn" onclick="iniciar(3)"><span class="ico">🌍</span><div class="tit">Geografía</div><div class="inf">10 reactivos · Física, humana, económica, ambiental</div></button>
+        <button class="mat-btn" onclick="iniciar(4)"><span class="ico">📐</span><div class="tit">Matemáticas</div><div class="inf">24 reactivos · Álgebra, funciones, geometría analítica, cálculo</div></button>
+        <button class="mat-btn" onclick="iniciar(5)"><span class="ico">✍️</span><div class="tit">Español</div><div class="inf">18 reactivos · Funciones, comprensión, ortografía, sintaxis</div></button>
+        <button class="mat-btn" onclick="iniciar(6)"><span class="ico">🔬</span><div class="tit">Biología</div><div class="inf">13 reactivos · Célula, metabolismo, genética, ecología</div></button>
+        <button class="mat-btn" onclick="iniciar(7)"><span class="ico">🌐</span><div class="tit">Historia Universal</div><div class="inf">10 reactivos · Ilustración, guerras mundiales, Guerra Fría</div></button>
+        <button class="mat-btn" onclick="iniciar(8)"><span class="ico">🇲🇽</span><div class="tit">Historia de México</div><div class="inf">10 reactivos · Independencia, Reforma, Revolución, s.XX</div></button>
+      </div>
+      <button class="btn-all" onclick="iniciar(-1)">Examen completo — 120 reactivos del temario</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EXAMEN ══ -->
+<div id="examen">
+  <div class="ex-head">
+    <div class="ex-tit" id="exTit">UNAM · Área 2</div>
+    <div class="timer" id="timer">60:00</div>
+  </div>
+  <div class="prog-wrap"><div class="prog-bar" id="progBar" style="width:1%"></div></div>
+  <div class="prog-info">
+    <span id="progTxt">Pregunta 1 de 13</span>
+    <span class="mat-tag" id="matTag">Física</span>
+  </div>
+  <div class="q-card" id="qCard">
+    <div class="num-q" id="numQ">REACTIVO 1</div>
+    <div class="texto-q" id="textoQ"></div>
+    <div id="figuraDiv"></div>
+    <div class="opciones" id="opcsDiv"></div>
+    <div class="fb" id="fbDiv"></div>
+    <div class="ctrl">
+      <button class="btn btn-skip" onclick="omitir()">Omitir</button>
+      <div class="pts" id="ptsDiv">Aciertos: 0</div>
+      <button class="btn btn-next" id="btnNext" onclick="siguiente()" disabled>Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESULTADOS ══ -->
+<div id="resultados">
+  <div class="r-card">
+    <div class="r-head">
+      <span class="ins" id="rIns">🎓</span>
+      <h2>Simulacro terminado</h2>
+      <div class="sub2" id="rSub"></div>
+    </div>
+    <div class="r-body">
+      <div class="calif" id="rCalif">0<span>/100</span></div>
+      <p class="msg" id="rMsg"></p>
+      <div class="stats">
+        <div class="stat"><span class="n" id="rC">0</span><span class="l">Correctas</span></div>
+        <div class="stat"><span class="n" id="rI">0</span><span class="l">Incorrectas</span></div>
+        <div class="stat"><span class="n" id="rO">0</span><span class="l">Omitidas</span></div>
+      </div>
+      <div class="des" id="rDes"></div>
+      <div class="btns-r">
+        <button class="btn-ret" onclick="reintentar()">↺ Repetir</button>
+        <button class="btn-men" onclick="menu()">← Menú</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════
+//  BANCO DE REACTIVOS — Basado en el Temario Oficial
+//  Guía UNAM Área 2, ed. noviembre 2025
+//  120 preguntas nuevas (no son el examen muestra)
+// ════════════════════════════════════════════════════════
+const BANCO = [
+
+// ══ FÍSICA (13 reactivos) ══
+// Tema 1: Cinemática
+{m:"Física",q:"Un automóvil parte del reposo y alcanza 20 m/s en 4 segundos con aceleración constante. ¿Cuánto espacio recorre durante ese tiempo?",ops:["40 m","60 m","80 m","100 m"],r:0,exp:"x = v₀t + ½at². a=20/4=5 m/s². x = 0 + ½(5)(16) = 40 m."},
+{m:"Física",q:"¿Cuál de las siguientes gráficas velocidad–tiempo (v–t) representa un movimiento uniformemente acelerado (MUA)?",ops:["Una línea recta con pendiente positiva","Una línea horizontal","Una parábola","Una línea recta con pendiente cero"],r:0,exp:"En MUA la aceleración es constante, por lo que la velocidad aumenta linealmente: la gráfica v-t es una línea recta con pendiente positiva igual a la aceleración.",
+svg:`<svg viewBox="0 0 260 160" width="260" height="160" xmlns="http://www.w3.org/2000/svg">
+  <line x1="35" y1="130" x2="230" y2="130" stroke="#0d1b4b" stroke-width="2"/>
+  <line x1="35" y1="130" x2="35" y2="20" stroke="#0d1b4b" stroke-width="2"/>
+  <polygon points="230,126 240,130 230,134" fill="#0d1b4b"/>
+  <polygon points="31,20 35,10 39,20" fill="#0d1b4b"/>
+  <text x="242" y="134" font-size="12" fill="#0d1b4b">t</text>
+  <text x="22" y="16" font-size="12" fill="#0d1b4b">v</text>
+  <line x1="35" y1="128" x2="220" y2="30" stroke="#c9a84c" stroke-width="2.5"/>
+  <text x="80" y="148" font-size="10" fill="#27ae60" font-weight="bold">A) MUA ← Correcta</text>
+  <line x1="35" y1="80" x2="220" y2="80" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="150" y="76" font-size="9" fill="#888">B) MRU (v=cte)</text>
+</svg>`},
+{m:"Física",q:"Se lanza un proyectil horizontalmente desde una altura de 80 m. Tomando g = 10 m/s², ¿cuánto tarda en llegar al suelo?",ops:["2 s","3 s","4 s","8 s"],r:2,exp:"Caída libre: h = ½gt². 80 = ½(10)t². t² = 16. t = 4 s."},
+
+// Tema 2: Dinámica
+{m:"Física",q:"Un bloque de 5 kg se encuentra sobre una superficie sin fricción. Se le aplica una fuerza neta de 15 N. ¿Cuál es su aceleración?",ops:["1 m/s²","3 m/s²","5 m/s²","75 m/s²"],r:1,exp:"Segunda Ley de Newton: F = ma → a = F/m = 15/5 = 3 m/s²."},
+{m:"Física",q:"Un resorte con constante k = 200 N/m se comprime 0.05 m. ¿Cuál es la fuerza que ejerce el resorte (Ley de Hooke)?",ops:["4 N","10 N","40 N","100 N"],r:1,exp:"Ley de Hooke: F = kx = 200 × 0.05 = 10 N."},
+
+// Tema 3: Trabajo y energía
+{m:"Física",q:"Un objeto de 2 kg se lanza verticalmente hacia arriba con 10 m/s. ¿Cuál es su energía cinética en ese instante? (g = 10 m/s²)",ops:["10 J","50 J","100 J","200 J"],r:2,
+svg:`<svg viewBox="0 0 180 150" width="180" height="150" xmlns="http://www.w3.org/2000/svg">
+  <rect x="70" y="100" width="40" height="30" rx="4" fill="#0d1b4b"/>
+  <text x="90" y="120" font-size="11" text-anchor="middle" fill="#e8c97a">2 kg</text>
+  <line x1="90" y1="98" x2="90" y2="40" stroke="#c9a84c" stroke-width="2.5" marker-end="url(#up)"/>
+  <text x="105" y="70" font-size="11" fill="#c9a84c">v=10 m/s</text>
+  <line x1="20" y1="130" x2="160" y2="130" stroke="#555" stroke-width="2"/>
+  <defs><marker id="up" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><polygon points="4,0 8,8 0,8" fill="#c9a84c"/></marker></defs>
+</svg>`,
+exp:"Ec = ½mv² = ½(2)(10²) = ½(2)(100) = 100 J."},
+
+// Tema 4: Termodinámica
+{m:"Física",q:"¿Cuál es la temperatura en Kelvin equivalente a 27 °C?",ops:["27 K","246 K","300 K","373 K"],r:2,exp:"Conversión: K = °C + 273 = 27 + 273 = 300 K."},
+{m:"Física",q:"La Primera Ley de la Termodinámica establece que:",ops:["El calor no puede pasar espontáneamente de un cuerpo frío a uno caliente","La energía interna de un sistema aislado es constante","El calor es igual al trabajo más el cambio de energía interna","La entropía del universo siempre disminuye"],r:2,exp:"Primera Ley (conservación de energía): ΔU = Q − W, o equivalentemente Q = ΔU + W. El calor aportado es igual al cambio de energía interna más el trabajo realizado."},
+
+// Tema 5: Ondas
+{m:"Física",q:"Una onda tiene frecuencia de 440 Hz y velocidad de propagación de 340 m/s. ¿Cuál es su longitud de onda?",ops:["0.77 m","1.29 m","2.58 m","4.4 m"],r:0,exp:"λ = v/f = 340/440 ≈ 0.77 m. Es la longitud de onda del La4 en el aire."},
+
+// Tema 6: Electromagnetismo
+{m:"Física",q:"Dos cargas de +2 C y +3 C se encuentran separadas por 1 m. Según la Ley de Coulomb, si la distancia se duplica, la fuerza eléctrica entre ellas:",ops:["Se duplica","Se cuadruplica","Se reduce a la mitad","Se reduce a la cuarta parte"],r:3,exp:"F = kq₁q₂/r². Si r → 2r, F' = kq₁q₂/(2r)² = F/4. La fuerza se reduce a la cuarta parte."},
+{m:"Física",q:"En un circuito con resistencia R = 10 Ω y voltaje V = 120 V, ¿cuál es la corriente eléctrica (Ley de Ohm)?",ops:["1 200 A","12 A","1.2 A","0.12 A"],r:1,exp:"Ley de Ohm: I = V/R = 120/10 = 12 A."},
+
+// Temas adicionales (luz, historia de la física)
+{m:"Física",q:"¿Qué fenómeno explica que la luz cambie de dirección al pasar de un medio a otro con diferente densidad óptica?",ops:["Reflexión","Refracción","Difracción","Interferencia"],r:1,exp:"La refracción es el cambio de dirección y velocidad de una onda (incluida la luz) al pasar de un medio a otro con diferente índice de refracción."},
+{m:"Física",q:"Según la teoría electromagnética de Maxwell, la luz es:",ops:["Un flujo de partículas corpusculares","Una onda mecánica que necesita medio material","Una onda electromagnética transversal","Una onda longitudinal de presión"],r:2,exp:"Maxwell demostró que la luz es una onda electromagnética transversal formada por campos eléctrico y magnético perpendiculares que se propagan en el vacío."},
+
+// ══ LITERATURA (10 reactivos) ══
+{m:"Literatura",q:"¿Qué figura retórica consiste en dar cualidades humanas a seres inanimados o abstractos?",ops:["Metáfora","Hipérbole","Personificación","Anáfora"],r:2,exp:"La personificación (o prosopopeya) atribuye características o acciones humanas a animales, objetos o conceptos abstractos. Ej: 'El viento susurraba su canción'."},
+{m:"Literatura",q:"El Romanticismo literario se caracteriza principalmente por:",ops:["La objetividad del narrador y descripción minuciosa de la realidad social","La exaltación de los sentimientos, la naturaleza, el yo individual y lo medieval","El uso de símbolos e imágenes para evocar estados del alma","La ruptura total con la sintaxis y la lógica narrativa tradicional"],r:1,exp:"El Romanticismo (primera mitad del s. XIX) exalta la subjetividad, los sentimientos, la naturaleza, la libertad, lo medieval y lo nacional, en contraste con la razón ilustrada."},
+{m:"Literatura",q:"¿A qué subgénero épico pertenece el Cantar de Mio Cid?",ops:["Fábula","Epopeya medieval (cantar de gesta)","Novela picaresca","Romance"],r:1,exp:"El Cantar de Mio Cid es un cantar de gesta, subgénero épico medieval que narra las hazañas de un héroe (el Cid Campeador) con función histórica y patriótica."},
+{m:"Literatura",q:"La narración en primera persona en la que el narrador es también el protagonista se llama:",ops:["Narrador omnisciente","Narrador testigo","Narrador protagonista","Narrador editorial"],r:2,exp:"El narrador protagonista relata la historia desde su propia experiencia, usando la primera persona gramatical (yo). Conoce solo lo que él mismo vive y siente."},
+{m:"Literatura",q:"¿Cuál es la diferencia principal entre una novela y un cuento?",ops:["La novela siempre tiene final feliz; el cuento, no","La novela permite mayor extensión, complejidad de personajes y subtramas; el cuento es breve y concentrado","El cuento es siempre de ciencia ficción; la novela puede ser de cualquier género","La novela está escrita en verso; el cuento, en prosa"],r:1,exp:"La novela permite mayor extensión, desarrollo psicológico de personajes y múltiples subtramas. El cuento es breve, con un solo conflicto central y generalmente un final impactante."},
+{m:"Literatura",q:"El Modernismo hispanoamericano fue encabezado por:",ops:["Gabriel García Márquez","Rubén Darío","Pablo Neruda","Octavio Paz"],r:1,exp:"Rubén Darío (Nicaragua, 1867–1916) es el máximo representante del Modernismo hispanoamericano, movimiento que renovó la poesía en lengua española con musicalidad, exotismo y simbolismo."},
+{m:"Literatura",q:"¿Qué es un poema en prosa?",ops:["Un texto en verso con rima consonante","Un texto sin métrica ni rima pero con intensidad lírica y recursos poéticos","Un tipo de novela lírica con personajes simbólicos","Una obra dramática escrita en verso libre"],r:1,exp:"El poema en prosa prescinde de la métrica y la rima, pero conserva los recursos del lenguaje poético (imágenes, ritmo interno, subjetividad) y la intensidad lírica."},
+{m:"Literatura",q:"El Realismo Mágico, característica de la literatura latinoamericana del 'boom', consiste en:",ops:["Narrar solo hechos fantásticos en un mundo irreal","Integrar elementos mágicos o sobrenaturales con la realidad cotidiana de manera natural","Rechazar toda ficción para centrarse en documentos históricos","Usar técnicas de la ciencia ficción para predecir el futuro"],r:1,exp:"El Realismo Mágico (García Márquez, Rulfo, Carpentier) incorpora lo sobrenatural dentro de lo cotidiano como algo natural y aceptado, reflejando la cosmovisión latinoamericana."},
+{m:"Literatura",q:"¿Cuál es la función de la catarsis en la tragedia griega según Aristóteles?",ops:["Entretener al público con situaciones cómicas","Purgar o purificar las emociones del espectador mediante la compasión y el terror","Mostrar la superioridad moral del héroe sobre los dioses","Enseñar historia de forma dramática"],r:1,exp:"Aristóteles define la catarsis en la Poética como la purificación o liberación de las pasiones (temor y compasión) que experimenta el espectador al presenciar la tragedia."},
+{m:"Literatura",q:"¿Qué elemento distingue a la lírica de los demás géneros literarios?",ops:["La presencia de personajes y diálogo","La expresión subjetiva de sentimientos y emociones del yo poético","La narración de acciones en orden cronológico","El conflicto dramático entre personajes opuestos"],r:1,exp:"La lírica es el género literario que expresa el mundo interior del yo poético: sentimientos, emociones, visiones subjetivas. A diferencia de la épica (narración) y la dramática (diálogo y acción)."},
+
+// ══ QUÍMICA (13 reactivos) ══
+{m:"Química",q:"¿Cuántos protones, neutrones y electrones tiene el isótopo carbono-14 (¹⁴C)?",ops:["6 protones, 6 neutrones, 6 electrones","6 protones, 8 neutrones, 6 electrones","8 protones, 6 neutrones, 8 electrones","14 protones, 0 neutrones, 14 electrones"],r:1,exp:"El carbono tiene número atómico Z=6 (6 protones, 6 electrones). El número másico A=14, por lo que neutrones = A−Z = 14−6 = 8. Por tanto: 6p, 8n, 6e."},
+{m:"Química",q:"¿Qué tipo de enlace se forma cuando dos átomos NO metálicos comparten electrones?",ops:["Enlace iónico","Enlace metálico","Enlace covalente","Enlace de Van der Waals"],r:2,exp:"El enlace covalente se forma cuando dos átomos (generalmente no metálicos) comparten uno o más pares de electrones para alcanzar la configuración estable del gas noble más cercano."},
+{m:"Química",q:"El pH de una solución de HCl 0.01 M (ácido fuerte) es:",ops:["1","2","7","12"],r:1,exp:"HCl es ácido fuerte: se disocia completamente. [H⁺] = 0.01 = 10⁻² M. pH = −log[H⁺] = −log(10⁻²) = 2."},
+{m:"Química",q:"¿Cuál es el producto de la reacción de neutralización entre HCl y NaOH?",ops:["H₂ y NaCl","NaCl y H₂O","Na₂O y HCl","NaH y Cl₂O"],r:1,exp:"HCl + NaOH → NaCl + H₂O. La neutralización entre un ácido fuerte y una base fuerte produce una sal (NaCl) y agua."},
+{m:"Química",q:"En la tabla periódica, ¿qué propiedad AUMENTA de izquierda a derecha en un período?",ops:["Radio atómico","Electronegatividad","Carácter metálico","Reactividad con el agua"],r:1,exp:"De izquierda a derecha en un período, aumenta el número de protones sin añadir capas electrónicas, por lo que la electronegatividad y la afinidad electrónica aumentan, mientras el radio atómico disminuye."},
+{m:"Química",q:"¿Qué ley establece que los volúmenes de gases que reaccionan entre sí, medidos en las mismas condiciones, guardan relaciones de números enteros simples?",ops:["Ley de Avogadro","Ley de Gay-Lussac","Ley de Boyle","Ley de Charles"],r:1,exp:"La Ley de Gay-Lussac de los volúmenes de combinación establece que los gases reaccionan en proporciones volumétricas de números enteros simples (ej. 2H₂ + O₂ → 2H₂O: 2:1:2)."},
+{m:"Química",q:"Los lípidos se clasifican en saponificables y no saponificables. ¿Cuál es un ejemplo de lípido NO saponificable?",ops:["Triglicérido","Fosfolípido","Colesterol","Cera de abejas"],r:2,exp:"Los lípidos no saponificables no contienen ácidos grasos esterificados y no pueden hidrolizarse con álcalis para producir jabón. El colesterol (esterol) es el ejemplo más importante."},
+{m:"Química",q:"El proceso mediante el cual el ATP se produce en la cadena respiratoria a partir de ADP y fosfato inorgánico se llama:",ops:["Glucólisis","Fotosíntesis","Fosforilación oxidativa","Fermentación"],r:2,exp:"La fosforilación oxidativa ocurre en la membrana interna mitocondrial. La ATP sintasa aprovecha el gradiente de H⁺ generado por la cadena respiratoria para sintetizar ATP a partir de ADP + Pᵢ."},
+{m:"Química",q:"¿Cuántos isómeros estructurales existen para el butano (C₄H₁₀)?",ops:["1","2","3","4"],r:1,exp:"El butano tiene dos isómeros estructurales: n-butano (cadena recta CH₃-CH₂-CH₂-CH₃) e isobutano (2-metilpropano, cadena ramificada)."},
+{m:"Química",q:"En una reacción química, el catalizador:",ops:["Se consume en la reacción y no puede recuperarse","Aumenta la energía de activación necesaria","Disminuye la energía de activación sin ser consumido","Eleva la temperatura de la reacción"],r:2,exp:"Un catalizador ofrece una ruta alternativa con menor energía de activación, acelerando la reacción sin ser consumido, por lo que puede recuperarse al final del proceso."},
+{m:"Química",q:"¿Qué tipo de reacción orgánica ocurre cuando el benceno reacciona con Br₂ en presencia de FeBr₃?",ops:["Adición","Sustitución electrofílica aromática","Eliminación","Polimerización"],r:1,exp:"El anillo bencénico reacciona por sustitución electrofílica aromática (SEA): el H del anillo es sustituido por Br, preservando la aromaticidad. FeBr₃ actúa como ácido de Lewis activador."},
+{m:"Química",q:"¿Cuál es el principal producto de la fermentación alcohólica de la glucosa?",ops:["Ácido láctico y CO₂","Etanol y CO₂","Acetaldehído y H₂","Ácido acético y H₂O"],r:1,exp:"Fermentación alcohólica (levaduras): C₆H₁₂O₆ → 2C₂H₅OH + 2CO₂. Produce etanol y dióxido de carbono en condiciones anaeróbicas."},
+{m:"Química",q:"La electrólisis del agua produce:",ops:["H₂ en el cátodo y O₂ en el ánodo","O₂ en el cátodo y H₂ en el ánodo","H₂O₂ en ambos electrodos","HCl y NaOH en los electrodos"],r:0,exp:"En la electrólisis del agua: en el cátodo (polo negativo) se reduce el H⁺ → H₂. En el ánodo (polo positivo) se oxida el OH⁻ → O₂. Proporción 2H₂:1O₂."},
+
+// ══ GEOGRAFÍA (10 reactivos) ══
+{m:"Geografía",q:"¿Qué es la deriva continental?",ops:["El movimiento de las corrientes oceánicas superficiales","La teoría que propone que los continentes se han desplazado lentamente sobre el manto terrestre","El proceso de erosión costera por acción del mar","La formación de nuevas islas volcánicas en el fondo oceánico"],r:1,exp:"La deriva continental (Wegener, 1912) propone que los continentes actuales formaron un supercontinente (Pangea) que se fragmentó y sus piezas se han desplazado sobre el manto a lo largo de millones de años."},
+{m:"Geografía",q:"¿Cuál es el principal factor que determina los climas en la Tierra?",ops:["La altitud sobre el nivel del mar","La latitud respecto al Ecuador","La distancia al océano más cercano","La densidad de la vegetación"],r:1,exp:"La latitud determina la cantidad de radiación solar recibida y el ángulo de incidencia, siendo el principal factor climático. Define los grandes cinturones climáticos (tropical, templado, polar)."},
+{m:"Geografía",q:"La ciudad de México se ubica sobre un antiguo lago desecado llamado:",ops:["Lago de Chapala","Lago de Texcoco","Lago Xochimilco","Lago de Patzcuaro"],r:1,exp:"La Ciudad de México se asienta sobre el antiguo lago de Texcoco, desecado progresivamente desde la época colonial. Esto explica los problemas de hundimiento y sismos que enfrenta."},
+{m:"Geografía",q:"¿Cuál es el río más largo del mundo?",ops:["Río Amazonas","Río Nilo","Río Yangtze","Río Mississippi"],r:1,exp:"El río Nilo (África), con aproximadamente 6,650 km, es considerado el más largo del mundo, aunque el Amazonas tiene el mayor caudal y cuenca hidrográfica."},
+{m:"Geografía",q:"La transición demográfica describe el paso de:",ops:["Altas tasas de natalidad y mortalidad a bajas tasas en ambas","Alta mortalidad a alta natalidad en países desarrollados","Baja natalidad a alta natalidad en países en desarrollo","Migración rural a urbana en países industrializados"],r:0,exp:"La transición demográfica describe el paso de una sociedad con altas tasas de natalidad y mortalidad (crecimiento lento) a otra con bajas tasas en ambas variables, pasando por una fase intermedia de crecimiento acelerado."},
+{m:"Geografía",q:"¿Qué es el Índice de Desarrollo Humano (IDH)?",ops:["Una medida del PIB per cápita de los países","Un índice compuesto por esperanza de vida, educación e ingreso","El porcentaje de población urbana en un país","La cantidad de emisiones de CO₂ por habitante"],r:1,exp:"El IDH (PNUD) combina tres dimensiones: salud (esperanza de vida), educación (años de escolaridad) e ingreso (INB per cápita). Clasifica a los países según su nivel de desarrollo humano."},
+{m:"Geografía",q:"El fenómeno de El Niño provoca principalmente:",ops:["Enfriamiento del Pacífico oriental y lluvias en el desierto de Atacama","Calentamiento anormal de las aguas del Pacífico tropical oriental con efectos climáticos globales","Aumento del nivel del mar en el Atlántico norte","Descenso de la temperatura global y sequías en el Ecuador"],r:1,exp:"El Niño (ENSO) es el calentamiento anormal de las aguas superficiales del Pacífico ecuatorial oriental, que altera los patrones de lluvia y temperatura en todo el planeta."},
+{m:"Geografía",q:"¿Cuál es la principal causa de la deforestación en la Amazonía?",ops:["La minería de oro y plata","La expansión agrícola y la ganadería extensiva","El crecimiento de las ciudades amazónicas","La extracción de petróleo"],r:1,exp:"La principal causa de deforestación amazónica es la expansión de la frontera agropecuaria: habilitación de tierras para ganadería extensiva y cultivos (principalmente soya), junto con la tala ilegal de madera."},
+{m:"Geografía",q:"México pertenece a la región geoeconómica denominada:",ops:["América Central","América del Norte (TLCAN/T-MEC)","América del Sur","Cono Sur"],r:1,exp:"México forma parte de América del Norte y del bloque económico T-MEC (TMEC/USMCA), junto con EE.UU. y Canadá, su principal zona de intercambio comercial."},
+{m:"Geografía",q:"¿Cuál de los siguientes es un ejemplo de recurso natural renovable?",ops:["Petróleo","Carbón mineral","Gas natural","Energía solar"],r:3,exp:"La energía solar es renovable porque el sol la produce de manera continua e inagotable a escala humana. El petróleo, el carbón y el gas son recursos fósiles no renovables."},
+
+// ══ MATEMÁTICAS (24 reactivos) ══
+// Álgebra y aritmética
+{m:"Matemáticas",q:"Simplifica la expresión: (3x²y)(−2xy³)",ops:["−6x³y⁴","6x³y⁴","−6x²y³","5x³y⁴"],r:0,exp:"Multiplica coeficientes: 3×(−2)=−6. Suma exponentes de x: 2+1=3. Suma exponentes de y: 1+3=4. Resultado: −6x³y⁴."},
+{m:"Matemáticas",q:"¿Cuál es el resultado de factorizar completamente 4x² − 9?",ops:["(2x−3)²","(4x−9)(x+1)","(2x+3)(2x−3)","(x+3)(4x−3)"],r:2,exp:"4x²−9 es una diferencia de cuadrados: a²−b² = (a+b)(a−b). Con a=2x y b=3: (2x+3)(2x−3)."},
+{m:"Matemáticas",q:"Si log₂(x) = 5, ¿cuál es el valor de x?",ops:["10","25","32","64"],r:2,exp:"log₂(x)=5 significa 2⁵=x. 2⁵=32. Por tanto x=32."},
+{m:"Matemáticas",q:"¿Cuántos términos tiene la progresión aritmética: 3, 7, 11, ... , 99?",ops:["24","25","26","27"],r:1,exp:"aₙ = a₁ + (n−1)d → 99 = 3 + (n−1)×4 → 96 = (n−1)×4 → n−1 = 24 → n = 25."},
+
+// Funciones
+{m:"Matemáticas",q:"¿Cuál es el dominio de la función f(x) = √(x − 4)?",ops:["x ≤ 4","x < 4","x ≥ 4","Todos los reales"],r:2,exp:"Para que la raíz cuadrada esté definida en los reales, el radicando debe ser ≥ 0: x − 4 ≥ 0 → x ≥ 4. Dominio: [4, +∞)."},
+{m:"Matemáticas",q:"La función f(x) = 2ˣ tiene como asíntota horizontal:",ops:["y = 2","y = 0","x = 0","y = 1"],r:1,
+svg:`<svg viewBox="0 0 240 160" width="240" height="160" xmlns="http://www.w3.org/2000/svg">
+  <line x1="30" y1="130" x2="220" y2="130" stroke="#0d1b4b" stroke-width="1.5"/>
+  <line x1="80" y1="10" x2="80" y2="140" stroke="#0d1b4b" stroke-width="1.5"/>
+  <polygon points="220,126 228,130 220,134" fill="#0d1b4b"/>
+  <polygon points="76,10 80,2 84,10" fill="#0d1b4b"/>
+  <text x="225" y="134" font-size="11" fill="#0d1b4b">x</text>
+  <text x="68" y="8" font-size="11" fill="#0d1b4b">y</text>
+  <path d="M30,128 Q60,127 80,110 Q100,85 120,55 Q140,28 160,15 Q180,8 210,5" stroke="#c9a84c" stroke-width="2.5" fill="none"/>
+  <line x1="30" y1="130" x2="220" y2="130" stroke="#e74c3c" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="160" y="126" font-size="10" fill="#e74c3c">y = 0 (asíntota)</text>
+  <text x="155" y="22" font-size="10" fill="#c9a84c">f(x) = 2ˣ</text>
+</svg>`,
+exp:"La función exponencial 2ˣ tiende a 0 cuando x→−∞, pero nunca lo alcanza. La recta y=0 (eje x) es su asíntota horizontal."},
+{m:"Matemáticas",q:"Si f(x) = 3x − 1 y g(x) = x², ¿cuánto vale f(g(2))?",ops:["7","11","23","35"],r:1,exp:"g(2) = 2² = 4. f(g(2)) = f(4) = 3(4)−1 = 12−1 = 11."},
+
+// Trigonometría
+{m:"Matemáticas",q:"¿Cuál es el valor de sen(30°)?",ops:["√2/2","√3/2","1/2","1"],r:2,exp:"En el triángulo 30-60-90, el seno del ángulo de 30° es el cateto opuesto entre la hipotenusa = 1/2."},
+{m:"Matemáticas",q:"Una escalera de 5 m apoyada en una pared forma un ángulo de 60° con el suelo. ¿A qué altura llega la escalera a la pared?",ops:["2.5 m","3 m","4.33 m","5 m"],r:2,
+svg:`<svg viewBox="0 0 200 180" width="200" height="180" xmlns="http://www.w3.org/2000/svg">
+  <line x1="30" y1="160" x2="180" y2="160" stroke="#0d1b4b" stroke-width="2"/>
+  <line x1="30" y1="160" x2="30" y2="20" stroke="#0d1b4b" stroke-width="2"/>
+  <line x1="30" y1="20" x2="140" y2="160" stroke="#c9a84c" stroke-width="2.5"/>
+  <text x="82" y="95" font-size="12" fill="#c9a84c" font-weight="bold">5 m</text>
+  <path d="M140,160 A25,25 0 0,0 118,148" fill="none" stroke="#1e3280" stroke-width="1.5"/>
+  <text x="118" y="155" font-size="11" fill="#1e3280">60°</text>
+  <text x="5" y="100" font-size="11" fill="#27ae60" font-weight="bold">h=?</text>
+  <line x1="25" y1="20" x2="35" y2="20" stroke="#555" stroke-width="1.5"/>
+  <line x1="25" y1="160" x2="25" y2="150" stroke="#555" stroke-width="1.5"/>
+</svg>`,
+exp:"La escalera es la hipotenusa. La altura es el cateto opuesto a 60°: h = 5×sen(60°) = 5×(√3/2) = 5×0.866 ≈ 4.33 m."},
+
+// Geometría analítica
+{m:"Matemáticas",q:"¿Cuál es la ecuación de la recta que pasa por el punto (2, 3) con pendiente m = −1?",ops:["y = −x + 5","y = x + 1","y = −x − 1","y = −x + 1"],r:0,exp:"Forma punto-pendiente: y − y₁ = m(x − x₁) → y − 3 = −1(x − 2) → y = −x + 2 + 3 → y = −x + 5."},
+{m:"Matemáticas",q:"¿Cuál es la distancia entre los puntos A(1, 2) y B(4, 6)?",ops:["3","4","5","7"],r:2,exp:"d = √[(4−1)² + (6−2)²] = √[9 + 16] = √25 = 5."},
+{m:"Matemáticas",q:"La ecuación x² + y² = 25 representa:",ops:["Una elipse con semiejes 25","Una circunferencia con radio 5 centrada en el origen","Una parábola con vértice en el origen","Una hipérbola con focos en los ejes"],r:1,exp:"La ecuación estándar x² + y² = r² representa una circunferencia centrada en el origen con radio r. Aquí r² = 25, r = 5."},
+{m:"Matemáticas",q:"¿Cuál es el vértice de la parábola y = x² − 4x + 3?",ops:["(2, −1)","(−2, 1)","(1, 0)","(2, 3)"],r:0,exp:"Completando el cuadrado: y = (x−2)² − 4 + 3 = (x−2)² − 1. Vértice en (h, k) = (2, −1)."},
+
+// Estadística y probabilidad
+{m:"Matemáticas",q:"En una bolsa hay 4 bolas rojas y 6 azules. ¿Cuál es la probabilidad de sacar una bola roja al azar?",ops:["1/4","2/5","3/5","4/6"],r:1,exp:"P(roja) = casos favorables / total = 4 / (4+6) = 4/10 = 2/5."},
+{m:"Matemáticas",q:"¿Cuál es el promedio (media aritmética) de: 8, 12, 5, 15, 10?",ops:["8","10","12","15"],r:1,exp:"Suma = 8+12+5+15+10 = 50. Media = 50/5 = 10."},
+
+// Cálculo diferencial
+{m:"Matemáticas",q:"¿Cuál es la derivada de f(x) = x³ − 5x + 2?",ops:["3x² − 5","3x² + 2","x³ − 5","3x − 5"],r:0,exp:"Aplicando la regla de la potencia: d/dx(x³) = 3x², d/dx(−5x) = −5, d/dx(2) = 0. Por lo tanto f'(x) = 3x² − 5."},
+{m:"Matemáticas",q:"El valor máximo de la función f(x) = −x² + 4x − 1 se encuentra en:",ops:["x = −2","x = 2","x = 4","x = 0"],r:1,exp:"Para máximos/mínimos: f'(x) = −2x + 4 = 0 → x = 2. Como el coeficiente de x² es negativo (−1), x=2 es un máximo."},
+
+// Cálculo integral
+{m:"Matemáticas",q:"¿Cuál es la integral indefinida de f(x) = 4x³?",ops:["12x²+C","x⁴+C","4x⁴+C","x⁴/4+C"],r:1,exp:"∫4x³ dx = 4·(x⁴/4) + C = x⁴ + C. Se aplica la regla de integración de potencias: ∫xⁿ dx = xⁿ⁺¹/(n+1) + C."},
+{m:"Matemáticas",q:"¿Cuál es el valor de la integral definida ∫₀² (2x) dx?",ops:["2","4","6","8"],r:1,exp:"∫₀²2x dx = [x²]₀² = 2² − 0² = 4. También se interpreta como el área del triángulo con base 2 y altura 4, que es ½×2×4=4."},
+{m:"Matemáticas",q:"La regla de la cadena para derivadas establece que si h(x) = f(g(x)), entonces:",ops:["h'(x) = f'(x)·g'(x)","h'(x) = f'(g(x))·g'(x)","h'(x) = f'(g(x)) + g'(x)","h'(x) = f(g'(x))"],r:1,exp:"La regla de la cadena: la derivada de la composición f(g(x)) es el producto de la derivada de la función exterior evaluada en g(x) por la derivada de la función interior g'(x)."},
+{m:"Matemáticas",q:"¿Cuánto vale lim(x→0) [sen(x)/x]?",ops:["0","1","∞","No existe"],r:1,exp:"Este es el límite trigonométrico fundamental: lim(x→0) [sen(x)/x] = 1. Es la base de la diferenciabilidad de la función seno y se demuestra geométricamente."},
+
+// ══ ESPAÑOL (18 reactivos) ══
+{m:"Español",q:"¿Cuál es la función del lenguaje que se centra en el mensaje mismo, en su forma y construcción?",ops:["Función referencial","Función poética","Función fática","Función metalingüística"],r:1,exp:"La función poética (Jakobson) se orienta hacia el mensaje mismo, destacando su forma, sonoridad y estructura. Se usa principalmente en literatura pero también en publicidad y juegos de palabras."},
+{m:"Español",q:"¿Cuál de las siguientes oraciones contiene un sujeto tácito (implícito)?",ops:["María estudia medicina.","El estudiante leyó el libro.","Comimos en un restaurante.","Los alumnos reprobaron el examen."],r:2,exp:"'Comimos en un restaurante' tiene sujeto tácito: 'nosotros', que se infiere de la desinencia verbal. El sujeto no aparece expresamente en la oración."},
+{m:"Español",q:"¿Qué tipo de oración es: 'Si estudias, aprobarás'?",ops:["Oración simple","Oración compuesta coordinada adversativa","Oración compuesta subordinada adverbial condicional","Oración compuesta subordinada sustantiva"],r:2,exp:"Es una oración compuesta subordinada adverbial condicional: la cláusula 'si estudias' es la prótasis (condición) y 'aprobarás' es la apódosis (consecuencia). El nexo 'si' introduce la condición."},
+{m:"Español",q:"¿Cuál es el antecedente del pronombre relativo en 'El libro que compraste era caro'?",ops:["El pronombre que","El verbo compraste","El sustantivo libro","El adjetivo caro"],r:2,exp:"El pronombre relativo 'que' tiene como antecedente al sustantivo 'libro', al cual modifica mediante la oración subordinada adjetiva 'que compraste'."},
+{m:"Español",q:"Selecciona la oración con uso correcto del gerundio:",ops:["Vi a María caminando por el parque (María caminaba)","Necesito un libro explicando la teoría (el libro explica)","Entregó el informe conteniendo errores (el informe contenía)","Compramos una computadora costando 10 mil pesos"],r:0,exp:"El gerundio debe expresar una acción simultánea o anterior al verbo principal, y su sujeto debe ser el mismo que el de la oración principal. En la opción A, María es quien camina y quien fue vista."},
+{m:"Español",q:"¿Cuál es el significado de la locución adverbial 'a rajatabla'?",ops:["Con mucha prisa","De forma estricta y sin excepciones","Con mala suerte","A medias tintas"],r:1,exp:"'A rajatabla' significa de manera estricta, rigurosa y sin contemplaciones. Ej: 'Cumplió las órdenes a rajatabla'."},
+{m:"Español",q:"¿Cuál de las siguientes palabras está correctamente acentuada?",ops:["examen","exámen","éxamen","examén"],r:0,exp:"'Examen' es una palabra llana (el acento recae en la penúltima sílaba: 'xa') terminada en 'n'. Las palabras llanas terminadas en n no llevan tilde. La forma correcta es 'examen' sin acento gráfico."},
+{m:"Español",q:"¿En qué caso se usa el punto y coma (;)?",ops:["Para introducir una enumeración o cita","Para separar oraciones independientes que tienen cierta relación entre sí","Para indicar una aclaración entre comas","Para unir palabras compuestas"],r:1,exp:"El punto y coma separa oraciones independientes relacionadas temáticamente pero que requieren una pausa mayor que la coma y menor que el punto. También separa los elementos de una enumeración compleja."},
+{m:"Español",q:"Lee el texto: 'Las redes sociales han transformado la comunicación humana. Permiten la conexión instantánea entre personas de todo el mundo. Sin embargo, también generan burbujas de información y desinformación.' ¿Cuál es la estructura de este texto?",ops:["Tesis — argumento — conclusión","Planteamiento — desarrollo — contraargumento","Descripción — narración — diálogo","Introducción — nudo — desenlace"],r:1,exp:"El texto sigue una estructura de planteamiento (las redes han transformado la comunicación), desarrollo (permiten conexión instantánea) y contraargumento (sin embargo, también generan problemas)."},
+{m:"Español",q:"La coherencia de un texto depende principalmente de:",ops:["El uso de palabras difíciles y técnicas","La unidad temática y la conexión lógica entre sus ideas","La extensión y el número de párrafos","El uso abundante de signos de puntuación"],r:1,exp:"La coherencia garantiza que todas las partes del texto giren en torno a un mismo tema y que las ideas se conecten lógicamente, sin contradicciones ni saltos abruptos de sentido."},
+{m:"Español",q:"¿Cuál es la función de los conectores causales como 'porque', 'ya que', 'puesto que'?",ops:["Expresar contraste u oposición","Indicar consecuencia de lo anterior","Señalar la causa o razón de lo enunciado","Añadir información nueva al texto"],r:2,exp:"Los conectores causales introducen la causa o razón que justifica lo dicho en la oración principal. Ej: 'No salí porque llovía' — 'porque' introduce la causa de no salir."},
+{m:"Español",q:"¿Cuál de las siguientes opciones contiene un error de concordancia?",ops:["Los niños juegan en el parque.","La directora y el director firmaron el acuerdo.","Hubieron muchos problemas en la reunión.","Las alumnas entregaron sus trabajos."],r:2,exp:"'Hubieron' es incorrecto porque el verbo 'haber' en su uso impersonal es invariable en número. La forma correcta es 'Hubo muchos problemas', no 'Hubieron'."},
+{m:"Español",q:"Un texto expositivo tiene como propósito principal:",ops:["Convencer al lector de adoptar una postura","Narrar una serie de eventos en orden cronológico","Presentar y explicar información de manera objetiva y clara","Expresar los sentimientos del autor"],r:2,exp:"El texto expositivo busca informar, explicar o difundir conocimientos de forma objetiva y ordenada, sin tomar partido ni perseguir persuadir. Es el modo característico de los textos científicos y académicos."},
+{m:"Español",q:"¿Cuál es la diferencia entre 'haber' y 'a ver'?",ops:["Son sinónimos perfectos en todos los contextos","'Haber' es verbo auxiliar o impersonal; 'a ver' es locución con preposición + verbo ver","'A ver' solo se usa en preguntas; 'haber' solo en afirmaciones","'Haber' va siempre con tilde; 'a ver', nunca"],r:1,exp:"'Haber' es el verbo auxiliar o impersonal (hay, había, haber). 'A ver' es la preposición 'a' + el infinitivo 'ver', usada como expresión de expectativa o llamada de atención. Son homófonos pero con distinto significado."},
+{m:"Español",q:"¿Cuál es el significado del prefijo griego 'bio-'?",ops:["Pequeño","Vida","Doble","Arriba"],r:1,exp:"El prefijo griego 'bio-' significa vida. Se encuentra en palabras como biología (estudio de la vida), biosfera, biopsia, bioquímica, etc."},
+{m:"Español",q:"La intertextualidad en literatura se refiere a:",ops:["El uso de palabras técnicas de otros campos del conocimiento","La relación que un texto establece con otros textos, citándolos o aludiéndolos","La traducción de una obra a otro idioma","El análisis del contexto histórico de una obra"],r:1,exp:"La intertextualidad designa la relación entre textos: citas, alusiones, parodias, reescrituras. Todo texto dialoga con textos anteriores, los incorpora, los transforma o los contradice."},
+{m:"Español",q:"Identifica el enunciado con el uso correcto de las comillas:",ops:['El maestro dijo "que estudiaramos más".','El maestro dijo: "Estudien más".','El maestro dijo que: "debíamos estudiar más".','El maestro dijo que "estudiaramos" más.'],r:1,exp:'Las comillas se usan para encerrar citas textuales directas precedidas de dos puntos. La opción B es correcta: discurso directo con los dos puntos antes de abrir comillas y mayúscula al inicio de la cita.'},
+{m:"Español",q:"¿Qué recurso estilístico utiliza la frase 'llegaron miles y miles de personas'?",ops:["Metáfora","Hipérbole","Eufemismo","Antítesis"],r:1,exp:"La hipérbole es la exageración expresiva con fines enfáticos o poéticos, sin pretensión de exactitud literal. 'Miles y miles' exagera la cantidad para enfatizar la gran concurrencia."},
+
+// ══ BIOLOGÍA (13 reactivos) ══
+{m:"Biología",q:"¿Qué función cumple la membrana plasmática en la célula?",ops:["Sintetizar proteínas","Regular el intercambio de sustancias entre el interior celular y el medio externo","Producir ATP por respiración celular","Almacenar información genética"],r:1,exp:"La membrana plasmática es una bicapa lipídica que regula selectivamente el paso de sustancias (permeabilidad selectiva), mantiene la homeostasis celular y permite la comunicación entre la célula y su entorno."},
+{m:"Biología",q:"¿Cuál es la función principal de los ribosomas?",ops:["Sintetizar lípidos","Producir energía en forma de ATP","Sintetizar proteínas a partir del ARNm","Almacenar y transportar vesículas secretoras"],r:2,exp:"Los ribosomas son los orgánulos encargados de la síntesis de proteínas (traducción). Leen el ARN mensajero y ensamblan los aminoácidos en el orden codificado para formar la cadena polipeptídica."},
+{m:"Biología",q:"La fotosíntesis ocurre en dos etapas. ¿Cuáles son?",ops:["Glucólisis y ciclo de Krebs","Reacciones luminosas y ciclo de Calvin","Fosforilación y glucogénesis","Transcripción y traducción"],r:1,exp:"La fotosíntesis tiene: 1) Fase luminosa (tilacoides): captura de luz, fotólisis del agua, producción de ATP y NADPH; 2) Ciclo de Calvin (estroma): fijación de CO₂ para producir glucosa usando el ATP y NADPH de la fase luminosa."},
+{m:"Biología",q:"¿Qué es la mitosis?",ops:["División celular que produce gametos con la mitad del número cromosómico","División celular que produce dos células hijas genéticamente idénticas a la célula madre","Proceso de duplicación del ADN previo a la división celular","Fusión de dos gametos para formar un cigoto"],r:1,exp:"La mitosis es la división nuclear que produce dos células hijas con el mismo número cromosómico que la célula madre (2n→2n). Es la base del crecimiento, la reparación y la reproducción asexual."},
+{m:"Biología",q:"Las Leyes de Mendel se basan en experimentos con guisantes (Pisum sativum). ¿Cuál es el principio de la Segunda Ley?",ops:["Los caracteres dominantes siempre ocultan a los recesivos","Cada par de alelos se separa durante la formación de gametos","Los alelos para diferentes caracteres se distribuyen independientemente entre sí","Los caracteres adquiridos se heredan a la descendencia"],r:2,exp:"La Segunda Ley de Mendel (distribución independiente) establece que los alelos de diferentes genes se segregan independientemente unos de otros durante la formación de gametos, siempre que los genes estén en diferentes cromosomas."},
+{m:"Biología",q:"¿Cuál es la diferencia entre ADN y ARN?",ops:["El ADN tiene uracilo; el ARN tiene timina","El ADN es de doble cadena y contiene desoxirribosa; el ARN es de cadena simple y contiene ribosa","El ADN se encuentra solo en el citoplasma; el ARN solo en el núcleo","El ADN codifica proteínas directamente sin intermediarios"],r:1,exp:"ADN: doble hélice, desoxirribosa, bases A-T-G-C, ubicado principalmente en el núcleo. ARN: cadena simple, ribosa, bases A-U-G-C, presente en núcleo y citoplasma. El ARN es el intermediario entre el ADN y las proteínas."},
+{m:"Biología",q:"¿Qué tipo de selección natural favorece a los individuos con características extremas en detrimento de los intermedios?",ops:["Selección estabilizadora","Selección direccional","Selección disruptiva","Selección sexual"],r:2,exp:"La selección disruptiva favorece a los fenotipos extremos de una población en detrimento de los intermedios, pudiendo conducir a la especiación si las dos variantes extremas se separan reproductivamente."},
+{m:"Biología",q:"¿Cuál es la función del sistema linfático?",ops:["Transportar oxígeno a los tejidos","Filtrar la sangre en el riñón","Defender al organismo mediante la producción de linfocitos y transportar linfa","Controlar la temperatura corporal mediante el sudor"],r:2,exp:"El sistema linfático tiene funciones inmunitarias (produce y transporta linfocitos, anticuerpos), drena el exceso de líquido intersticial hacia la sangre y absorbe grasas del intestino."},
+{m:"Biología",q:"¿Cuál es la principal diferencia entre bacterias (procariotas) y células animales (eucariotas)?",ops:["Las bacterias tienen mitocondrias; las células animales, no","Las bacterias carecen de membrana nuclear; las células animales tienen núcleo definido","Las bacterias tienen retículo endoplásmico; las animales, no","Las células animales carecen de ribosomas; las bacterias, sí"],r:1,exp:"La principal diferencia es la presencia o ausencia de núcleo definido: los procariotas (bacterias) carecen de membrana nuclear; su material genético está libre en el citoplasma. Los eucariotas tienen núcleo delimitado por membrana."},
+{m:"Biología",q:"¿Qué proceso permite a las plantas absorber agua del suelo hacia sus raíces?",ops:["Transpiración","Fotosíntesis","Ósmosis","Difusión simple"],r:2,exp:"El agua entra a la raíz por ósmosis: la concentración de solutos en las células de la raíz es mayor que en el suelo, por lo que el agua se desplaza del suelo (menor concentración de solutos) al interior de la raíz."},
+{m:"Biología",q:"En un ecosistema, ¿qué son los descomponedores?",ops:["Organismos que producen materia orgánica a partir de energía solar","Animales que se alimentan de plantas","Organismos (bacterias, hongos) que degradan la materia orgánica muerta y la convierten en nutrientes inorgánicos","Animales que cazan y se alimentan de otros animales"],r:2,exp:"Los descomponedores (bacterias y hongos principalmente) desintegran la materia orgánica muerta (detritos), reciclando los nutrientes (N, P, C) al suelo y permitiendo que sean reutilizados por los productores."},
+{m:"Biología",q:"¿Cuál es la función de la insulina?",ops:["Aumentar los niveles de glucosa en sangre","Estimular la descomposición de glucógeno en glucosa","Facilitar la entrada de glucosa a las células y bajar la glucemia","Regular la producción de glóbulos rojos"],r:2,exp:"La insulina (producida por las células β del páncreas) actúa cuando sube la glucemia: facilita la entrada de glucosa a las células (mediante GLUT4) y estimula la síntesis de glucógeno, bajando la glucosa en sangre."},
+{m:"Biología",q:"¿Qué es la biodiversidad?",ops:["El número total de individuos en un ecosistema","La variedad de formas de vida (especies, genes, ecosistemas) existentes en un área o en la Tierra","La distribución geográfica de las principales especies vegetales","El proceso de adaptación de las especies al cambio climático"],r:1,exp:"La biodiversidad comprende tres niveles: diversidad genética (variación dentro de las especies), diversidad de especies (número de especies) y diversidad de ecosistemas (variedad de hábitats y comunidades ecológicas)."},
+
+// ══ HISTORIA UNIVERSAL (10 reactivos) ══
+{m:"Historia Universal",q:"¿Cuál fue la principal consecuencia política de la Revolución Francesa (1789)?",ops:["El fortalecimiento de la monarquía absolutista europea","La eliminación de los privilegios del Antiguo Régimen y la difusión de los ideales de libertad, igualdad y fraternidad","La unificación de Europa bajo un solo gobierno republicano","El surgimiento del socialismo científico como corriente política dominante"],r:1,exp:"La Revolución Francesa acabó con el Antiguo Régimen (monarquía absoluta, feudalismo, privilegios del clero y la nobleza) y difundió los principios de la Ilustración: soberanía popular, derechos del ciudadano y división de poderes."},
+{m:"Historia Universal",q:"La Revolución Industrial del siglo XVIII comenzó en:",ops:["Francia","Alemania","Estados Unidos","Gran Bretaña"],r:3,exp:"La Revolución Industrial inició en Gran Bretaña en la segunda mitad del siglo XVIII, favorecida por sus recursos (carbón, hierro), su sistema financiero, el comercio colonial y el espíritu de innovación técnica (máquina de vapor de Watt, 1769)."},
+{m:"Historia Universal",q:"El imperialismo del siglo XIX consistió en:",ops:["La formación de alianzas militares entre naciones igualmente poderosas","La expansión política, económica y cultural de las potencias europeas sobre África, Asia y Oceanía","La difusión pacífica de la cultura occidental mediante el comercio","La unificación de los estados nacionales de Europa central"],r:1,exp:"El imperialismo (segunda mitad del s. XIX) fue la expansión de las potencias industriales europeas sobre territorios de África, Asia y Oceanía, estableciendo colonias para obtener materias primas, mercados y mano de obra."},
+{m:"Historia Universal",q:"¿Cuál fue la causa inmediata del estallido de la Primera Guerra Mundial (1914)?",ops:["La invasión alemana de Polonia","El asesinato del archiduque Francisco Fernando de Austria en Sarajevo","El hundimiento del Lusitania por submarinos alemanes","La invasión italiana de Etiopía"],r:1,exp:"El asesinato del archiduque Francisco Fernando de Austria-Hungría por Gavrilo Princip en Sarajevo (28 junio 1914) detonó el sistema de alianzas y compromisos mutuos que desencadenó la Primera Guerra Mundial."},
+{m:"Historia Universal",q:"El Plan Marshall (1948) fue un programa de:",ops:["Rearme militar de los países de la OTAN contra la URSS","Ayuda económica de Estados Unidos para la reconstrucción de Europa occidental tras la Segunda Guerra Mundial","Cooperación científica entre EE.UU. y la URSS durante la Guerra Fría","Decolonización de los territorios europeos en África y Asia"],r:1,exp:"El Plan Marshall (European Recovery Program) fue la ayuda económica masiva de EE.UU. (13,000 millones de dólares) para reconstruir las economías de Europa occidental devastadas por la Segunda Guerra Mundial y frenar el avance del comunismo."},
+{m:"Historia Universal",q:"¿Qué evento simbolizó el fin de la Guerra Fría en Europa?",ops:["La firma del Tratado de Versalles","La caída del Muro de Berlín en 1989","La creación de la Unión Europea","La disolución de la OTAN"],r:1,exp:"La caída del Muro de Berlín (9 de noviembre de 1989) simbolizó el fin de la división de Europa y de la Guerra Fría, precediendo a la reunificación alemana (1990) y la disolución de la URSS (1991)."},
+{m:"Historia Universal",q:"¿Cuál fue la ideología política predominante en la URSS bajo Stalin?",ops:["Fascismo de Estado","Socialismo científico marxista-leninista con terror estalinista","Socialdemocracia parlamentaria","Anarquismo federalista"],r:1,exp:"La URSS bajo Stalin (1924-1953) se rigió por el marxismo-leninismo adaptado por Stalin: partido único, planificación económica centralizada, colectivización forzada y terror político (purgas, Gulag)."},
+{m:"Historia Universal",q:"El movimiento de descolonización de Asia y África tuvo su mayor impulso en:",ops:["El período entre guerras (1919-1939)","Las décadas de 1950 y 1960 tras la Segunda Guerra Mundial","El siglo XIX con el fin del imperialismo europeo","La Primera Guerra Mundial"],r:1,exp:"La descolonización masiva ocurrió en las décadas de 1950 y 1960, impulsada por los movimientos de independencia locales, el debilitamiento de las potencias europeas por la Segunda Guerra Mundial y el apoyo de la ONU al derecho de autodeterminación."},
+{m:"Historia Universal",q:"¿Qué fue el Holocausto?",ops:["La bomba atómica lanzada sobre Hiroshima y Nagasaki","El exterminio sistemático de seis millones de judíos y otras minorías por el régimen nazi","La masacre de civiles durante la Guerra de Vietnam","El bombardeo aliado de Dresden en la Segunda Guerra Mundial"],r:1,exp:"El Holocausto (Shoah) fue el genocidio sistemático perpetrado por la Alemania nazi entre 1941-1945: el asesinato de aproximadamente seis millones de judíos y millones de personas más (romaníes, homosexuales, discapacitados, prisioneros políticos)."},
+{m:"Historia Universal",q:"La Organización de las Naciones Unidas (ONU) fue fundada en:",ops:["1919, tras la Primera Guerra Mundial","1945, al terminar la Segunda Guerra Mundial","1947, al inicio de la Guerra Fría","1991, tras la disolución de la URSS"],r:1,exp:"La ONU fue fundada el 24 de octubre de 1945, tras la Segunda Guerra Mundial, sustituyendo a la Sociedad de Naciones. Sus propósitos son mantener la paz, la seguridad internacional y promover los derechos humanos."},
+
+// ══ HISTORIA DE MÉXICO (10 reactivos) ══
+{m:"Historia de México",q:"¿Cuál fue el principal argumento ideológico de Miguel Hidalgo para iniciar la Independencia de México?",ops:["La lucha de clases entre criollos y peninsulares por el control económico","La defensa de los derechos del pueblo novohispano, especialmente de los indígenas y mestizos, frente a la dominación colonial española","La imposición del liberalismo económico frente al mercantilismo colonial","La creación de una república federal independiente de influencia norteamericana"],r:1,exp:"El Grito de Dolores (16 septiembre 1810) convocó a indígenas, mestizos y criollos en nombre de la Virgen de Guadalupe y contra el 'mal gobierno'. Hidalgo apeló a la religión y a la justicia social más que a la ideología liberal ilustrada."},
+{m:"Historia de México",q:"Las Leyes de Reforma (1859) promulgadas por Benito Juárez establecieron principalmente:",ops:["La expulsión de los extranjeros y el proteccionismo económico","La separación Iglesia-Estado, la nacionalización de bienes eclesiásticos y el registro civil","El establecimiento de un sistema federal con 31 estados","La abolición de la esclavitud y la igualdad racial"],r:1,exp:"Las Leyes de Reforma (Ley Lerdo, Ley Juárez, Ley de Nacionalización) separaron la Iglesia del Estado, nacionalizaron los bienes del clero, establecieron el registro civil, los cementerios civiles y el matrimonio civil."},
+{m:"Historia de México",q:"El Porfiriato (1876-1910) se caracterizó principalmente por:",ops:["Una democracia participativa con alternancia política","Un régimen autoritario con desarrollo económico basado en inversión extranjera y trabajo campesino en condiciones precarias","Una economía cerrada al exterior con fuerte intervención estatal","Reformas agrarias que distribuyeron la tierra entre los campesinos"],r:1,exp:"El Porfiriato fue un régimen de 34 años con Porfirio Díaz. Se modernizó la infraestructura (ferrocarriles, industria) con inversión extranjera, pero la tierra se concentró en hacendados y las condiciones laborales de campesinos e indígenas eran de servidumbre."},
+{m:"Historia de México",q:"El Plan de Ayala (1911) fue elaborado por Emiliano Zapata con la demanda principal de:",ops:["El sufragio efectivo y la no reelección presidencial","La restitución y distribución de tierras a los campesinos ('La tierra es de quien la trabaja')","La formación de sindicatos obreros en las ciudades","La separación de la Iglesia del Estado mexicano"],r:1,exp:"El Plan de Ayala (28 noviembre 1911) desconoció a Madero y exigió la restitución de las tierras, bosques y aguas a los pueblos y campesinos, bajo el lema 'Tierra y Libertad'. Es el documento fundacional del agrarismo zapatista."},
+{m:"Historia de México",q:"La Constitución Política de los Estados Unidos Mexicanos de 1917 fue la primera en el mundo en incluir:",ops:["El derecho al voto de las mujeres","Derechos sociales: laborales (Art. 123) y agrarios (Art. 27)","El sistema de partido único como forma de gobierno","La abolición de la pena de muerte"],r:1,exp:"La Constitución de 1917 fue pionera mundial al incorporar derechos sociales: el Art. 27 reguló la propiedad de la tierra (reforma agraria) y el Art. 123 estableció los derechos de los trabajadores (jornada de 8 horas, salario mínimo, huelga)."},
+{m:"Historia de México",q:"¿Qué presidente mexicano llevó a cabo la expropiación petrolera el 18 de marzo de 1938?",ops:["Plutarco Elías Calles","Venustiano Carranza","Lázaro Cárdenas","Álvaro Obregón"],r:2,exp:"El presidente Lázaro Cárdenas decretó la expropiación petrolera el 18 de marzo de 1938, nacionalizando las propiedades de las compañías extranjeras (principalmente estadounidenses y británicas) y creando PEMEX."},
+{m:"Historia de México",q:"El modelo económico del 'Desarrollo Estabilizador' en México (1954-1970) se caracterizó por:",ops:["Apertura comercial y privatización de empresas públicas","Alto crecimiento económico, inflación baja, tipo de cambio fijo y fuerte inversión pública en infraestructura","Sustitución de importaciones sin crecimiento económico significativo","Dependencia total del petróleo como fuente de ingresos públicos"],r:1,exp:"El Desarrollo Estabilizador fue un período de crecimiento sostenido (6-7% anual), inflación controlada, tipo de cambio fijo (12.50 pesos por dólar desde 1954), expansión industrial y fuerte inversión del Estado en infraestructura educativa y de comunicaciones."},
+{m:"Historia de México",q:"El movimiento estudiantil de 1968 en México culminó con:",ops:["La renuncia del presidente Díaz Ordaz y la apertura democrática","La masacre del 2 de octubre en Tlatelolco, donde el ejército reprimió a los estudiantes","La firma de un acuerdo entre el gobierno y el Consejo Nacional de Huelga","La cancelación de los Juegos Olímpicos de México"],r:1,exp:"El 2 de octubre de 1968, diez días antes de la inauguración de los Juegos Olímpicos, el ejército reprimió violentamente una manifestación estudiantil en la Plaza de las Tres Culturas en Tlatelolco, con un saldo de decenas o cientos de muertos (cifra oficial nunca confirmada)."},
+{m:"Historia de México",q:"El Tratado de Libre Comercio de América del Norte (TLCAN) entró en vigor en:",ops:["1986","1990","1994","2000"],r:2,exp:"El TLCAN (TLC entre México, EE.UU. y Canadá) entró en vigor el 1 de enero de 1994, el mismo día en que el EZLN se levantó en Chiapas. Fue renegociado en 2018 como T-MEC (TMEC/USMCA)."},
+{m:"Historia de México",q:"¿Cuál fue el primer partido de oposición en ganar la presidencia de México, poniendo fin a 71 años de hegemonía del PRI?",ops:["PRD con Cuauhtémoc Cárdenas en 1988","PAN con Vicente Fox en 2000","MORENA con Andrés Manuel López Obrador en 2018","PAN con Felipe Calderón en 2006"],r:1,exp:"Vicente Fox Quesada, candidato del PAN, ganó las elecciones presidenciales del 2 de julio del año 2000, derrotando al candidato del PRI y poniendo fin a 71 años consecutivos de gobiernos priistas desde 1929."}
+];
+
+// ════════ CONFIGURACIÓN POR MATERIA ════════
+const MATS = [
+  {nom:"Física",       color:"#e74c3c", ico:"⚡"},
+  {nom:"Literatura",   color:"#8e44ad", ico:"📖"},
+  {nom:"Química",      color:"#2980b9", ico:"🧪"},
+  {nom:"Geografía",    color:"#27ae60", ico:"🌍"},
+  {nom:"Matemáticas",  color:"#d35400", ico:"📐"},
+  {nom:"Español",      color:"#c9a84c", ico:"✍️"},
+  {nom:"Biología",     color:"#16a085", ico:"🔬"},
+  {nom:"Historia Universal", color:"#7f8c8d", ico:"🌐"},
+  {nom:"Historia de México", color:"#c0392b", ico:"🇲🇽"},
+];
+
+// ════════ ESTADO ════════
+let preguntas=[], idx=0, puntaje=0, respuestas=[], respondida=false;
+let timerInt=null, segs=0, modoIdx=-1;
+
+function iniciar(mi) {
+  modoIdx = mi;
+  if(mi === -1) {
+    preguntas = [...BANCO];
+    segs = 180*60;
+  } else {
+    const nom = MATS[mi].nom;
+    preguntas = BANCO.filter(p=>p.m===nom);
+    segs = Math.max(preguntas.length * 90, 10*60);
+  }
+  idx=0; puntaje=0;
+  respuestas = new Array(preguntas.length).fill(null);
+  respondida=false;
+  document.getElementById('portada').style.display='none';
+  document.getElementById('examen').style.display='block';
+  document.getElementById('exTit').textContent = mi===-1 ? 'UNAM · Examen Completo · Temario' : `UNAM · ${MATS[mi].nom}`;
+  mostrar();
+  arrancarTimer();
+}
+
+function arrancarTimer() {
+  clearInterval(timerInt);
+  timerInt = setInterval(()=>{
+    segs--;
+    const m=String(Math.floor(segs/60)).padStart(2,'0');
+    const s=String(segs%60).padStart(2,'0');
+    const el=document.getElementById('timer');
+    el.textContent=`${m}:${s}`;
+    if(segs<=300) el.classList.add('urg');
+    if(segs<=0){clearInterval(timerInt);resultados();}
+  },1000);
+}
+
+function mostrar() {
+  respondida=false;
+  const p=preguntas[idx], tot=preguntas.length;
+  document.getElementById('numQ').textContent=`REACTIVO ${idx+1}`;
+  document.getElementById('textoQ').textContent=p.q;
+  // Figura SVG si existe
+  const fd=document.getElementById('figuraDiv');
+  fd.innerHTML = p.svg ? `<div class="figura">${p.svg}</div>` : '';
+  document.getElementById('progTxt').textContent=`Pregunta ${idx+1} de ${tot}`;
+  document.getElementById('matTag').textContent=p.m;
+  document.getElementById('progBar').style.width=`${((idx+1)/tot)*100}%`;
+  document.getElementById('ptsDiv').textContent=`Aciertos: ${puntaje}`;
+  document.getElementById('fbDiv').className='fb';
+  document.getElementById('fbDiv').textContent='';
+  document.getElementById('btnNext').disabled=true;
+  document.getElementById('btnNext').textContent=idx===tot-1?'Ver resultados →':'Siguiente →';
+  const c=document.getElementById('qCard');
+  c.style.animation='none'; c.offsetHeight; c.style.animation='up .3s ease both';
+  const letras=['A','B','C','D'];
+  const div=document.getElementById('opcsDiv');
+  div.innerHTML='';
+  p.ops.forEach((op,i)=>{
+    const el=document.createElement('div');
+    el.className='opcion';
+    el.innerHTML=`<span class="letra">${letras[i]}</span><span>${op}</span>`;
+    el.onclick=()=>elegir(i,el);
+    div.appendChild(el);
+  });
+}
+
+function elegir(i,el) {
+  if(respondida) return;
+  respondida=true;
+  const p=preguntas[idx];
+  const todas=document.querySelectorAll('.opcion');
+  todas.forEach(o=>o.style.cursor='default');
+  const bien=i===p.r;
+  respuestas[idx]=bien;
+  if(bien) puntaje++;
+  el.classList.add(bien?'ok':'err');
+  if(!bien) todas[p.r].classList.add('ok');
+  const fb=document.getElementById('fbDiv');
+  fb.className=`fb ${bien?'ok':'err'}`;
+  fb.textContent=(bien?'✓ Correcto. ':'✗ Incorrecto. ')+p.exp;
+  document.getElementById('ptsDiv').textContent=`Aciertos: ${puntaje}`;
+  document.getElementById('btnNext').disabled=false;
+}
+
+function omitir() {
+  if(respondida) return;
+  respondida=true;
+  respuestas[idx]=null;
+  const p=preguntas[idx];
+  const todas=document.querySelectorAll('.opcion');
+  todas[p.r].classList.add('ok');
+  todas.forEach(o=>o.style.cursor='default');
+  const fb=document.getElementById('fbDiv');
+  fb.className='fb err';
+  fb.textContent=`Omitida. Respuesta: ${['A','B','C','D'][p.r]}. ${p.exp}`;
+  document.getElementById('btnNext').disabled=false;
+}
+
+function siguiente() {
+  if(idx<preguntas.length-1){idx++;mostrar();}
+  else{clearInterval(timerInt);resultados();}
+}
+
+function resultados() {
+  document.getElementById('examen').style.display='none';
+  document.getElementById('resultados').style.display='block';
+  const tot=preguntas.length;
+  const cor=respuestas.filter(r=>r===true).length;
+  const inc=respuestas.filter(r=>r===false).length;
+  const omi=respuestas.filter(r=>r===null).length;
+  const cal=Math.round((cor/tot)*100);
+  document.getElementById('rCalif').innerHTML=`${cal}<span>/100</span>`;
+  document.getElementById('rSub').textContent=modoIdx===-1?'Examen Completo — 120 reactivos':'Materia: '+MATS[modoIdx].nom;
+  document.getElementById('rC').textContent=cor;
+  document.getElementById('rI').textContent=inc;
+  document.getElementById('rO').textContent=omi;
+  let ins='📘',msg='';
+  if(cal>=90){ins='🏆';msg='¡Sobresaliente! Excelente preparación.';}
+  else if(cal>=75){ins='🎓';msg='Muy buen resultado. Refuerza las áreas débiles.';}
+  else if(cal>=60){ins='📗';msg='Resultado aceptable. Estudia más los temas con menos aciertos.';}
+  else{ins='📘';msg='Necesitas reforzar varios temas del temario. ¡Sigue adelante!';}
+  document.getElementById('rIns').textContent=ins;
+  document.getElementById('rMsg').textContent=msg;
+  // Desglose por materia
+  const mats=[...new Set(preguntas.map(p=>p.m))];
+  const des=document.getElementById('rDes');
+  des.innerHTML='<h3>Desempeño por asignatura</h3>';
+  mats.forEach(mat=>{
+    const idxs=preguntas.map((p,i)=>p.m===mat?i:-1).filter(i=>i>=0);
+    const ac=idxs.filter(i=>respuestas[i]===true).length;
+    const t=idxs.length;
+    const pct=Math.round((ac/t)*100);
+    const row=document.createElement('div');
+    row.className='mat-row';
+    row.innerHTML=`<span class="mat-nom">${mat}</span><div class="mb-wrap"><div class="mb" style="width:0%" data-w="${pct}%"></div></div><span class="mat-sc">${ac}/${t}</span>`;
+    des.appendChild(row);
+  });
+  setTimeout(()=>document.querySelectorAll('.mb').forEach(b=>b.style.width=b.dataset.w),300);
+}
+
+function reintentar(){document.getElementById('resultados').style.display='none';iniciar(modoIdx);}
+function menu(){clearInterval(timerInt);document.getElementById('resultados').style.display='none';document.getElementById('portada').style.display='block';}
+</script>
+</body>
+</html>
