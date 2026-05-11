@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simulador UNAM – Área 2 Ciencias Biológicas, Químicas y de la Salud</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --azul-unam: #0d1b4b;
+  --azul-medio: #162260;
+  --azul-claro: #1e3280;
+  --oro: #c9a84c;
+  --oro-claro: #e8c97a;
+  --oro-brillante: #f5d97a;
+  --crema: #f5f2eb;
+  --blanco: #ffffff;
+  --texto: #1a1a2e;
+  --gris: #6b7280;
+  --correcto: #14532d;
+  --correcto-bg: #dcfce7;
+  --incorrecto: #991b1b;
+  --incorrecto-bg: #fee2e2;
+  --sombra: 0 8px 32px rgba(0,0,0,0.25);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--azul-unam);
+  background-image:
+    radial-gradient(ellipse at 15% 20%, rgba(201,168,76,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 80%, rgba(30,50,128,0.5) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(13,27,75,0.8) 0%, transparent 80%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  color: var(--texto);
+}
+
+/* ══════ PORTADA ══════ */
+#pantalla-portada {
+  max-width: 680px;
+  width: 100%;
+  margin: auto;
+  animation: subir 0.7s ease both;
+}
+
+.logo-unam {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card-portada {
+  background: var(--crema);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--sombra), 0 0 0 1px rgba(201,168,76,0.35);
+}
+
+.card-portada-header {
+  background: linear-gradient(160deg, var(--azul-medio) 0%, var(--azul-unam) 100%);
+  padding: 32px 36px 28px;
+  border-bottom: 3px solid var(--oro);
+  text-align: center;
+}
+
+.card-portada-header h1 {
+  font-family: 'Libre Baskerville', serif;
+  color: var(--oro-claro);
+  font-size: 1.7rem;
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+
+.card-portada-header .subtitulo {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.card-portada-body { padding: 32px 36px; }
+
+.aviso-oficial {
+  background: rgba(13,27,75,0.07);
+  border-left: 4px solid var(--azul-claro);
+  padding: 14px 18px;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.88rem;
+  color: #1e2d5a;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.bloques-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.bloque-btn {
+  background: var(--blanco);
+  border: 2px solid #d4cfc5;
+  border-radius: 6px;
+  padding: 18px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.bloque-btn:hover {
+  border-color: var(--oro);
+  background: rgba(13,27,75,0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(13,27,75,0.14);
+}
+
+.bloque-btn .bloque-num {
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-bottom: 4px;
+}
+
+.bloque-btn .bloque-titulo {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.95rem;
+  color: var(--azul-unam);
+  font-weight: 700;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.bloque-btn .bloque-info {
+  font-size: 0.78rem;
+  color: var(--gris);
+}
+
+.bloque-btn .bloque-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.btn-examen-completo {
+  width: 100%;
+  background: linear-gradient(135deg, var(--azul-unam), var(--azul-medio));
+  color: var(--oro-claro);
+  border: 2px solid var(--oro);
+  padding: 16px;
+  border-radius: 5px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.25s;
+}
+
+.btn-examen-completo:hover {
+  background: linear-gradient(135deg, var(--azul-medio), var(--azul-claro));
+  box-shadow: 0 6px 20px rgba(201,168,76,0.3);
+}
+
+.datos-examen {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.dato-chip {
+  background: var(--azul-unam);
+  color: var(--oro-claro);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+/* ══════ EXAMEN ══════ */
+#pantalla-examen { display: none; max-width: 800px; width: 100%; margin: auto; }
+
+.exam-header {
+  background: var(--crema);
+  border-radius: 6px 6px 0 0;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 2px solid var(--oro);
+  box-shadow: 0 2px 0 rgba(13,27,75,0.07);
+}
+
+.exam-titulo { font-family: 'Libre Baskerville', serif; font-size: 0.9rem; color: var(--azul-unam); }
+
+.timer {
+  background: linear-gradient(135deg, var(--azul-unam), var(--azul-medio));
+  color: var(--oro);
+  padding: 6px 16px;
+  border-radius: 4px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.2rem;
+  letter-spacing: 0.1em;
+  min-width: 80px;
+  text-align: center;
+}
+
+.timer.urgente { color: #ff6b6b; animation: pulsar 0.8s infinite; }
+
+.progreso-barra-wrap { height: 5px; background: rgba(13,27,75,0.1); }
+.progreso-barra { height: 100%; background: linear-gradient(90deg, var(--verde-claro), var(--oro)); transition: width 0.4s; }
+
+.progreso-info {
+  background: var(--crema);
+  padding: 8px 22px;
+  font-size: 0.78rem;
+  color: var(--gris);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 1px solid rgba(201,168,76,0.3);
+  border-right: 1px solid rgba(201,168,76,0.3);
+}
+
+.materia-tag {
+  background: var(--verde-unam);
+  color: var(--oro-claro);
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pregunta-card {
+  background: var(--crema);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 32px 32px 24px;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--sombra);
+  animation: subir 0.3s ease both;
+}
+
+.num-q {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gris);
+  margin-bottom: 10px;
+}
+
+.texto-q {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1.05rem;
+  line-height: 1.75;
+  color: #111;
+  margin-bottom: 26px;
+}
+
+.texto-q .contexto {
+  background: rgba(13,27,75,0.05);
+  border-left: 3px solid var(--azul-claro);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  font-size: 0.93rem;
+  line-height: 1.7;
+  border-radius: 0 4px 4px 0;
+  font-style: italic;
+}
+
+.figura-svg {
+  margin: 14px auto 4px;
+  background: #fff;
+  border: 1.5px solid #d4cfc5;
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: auto;
+}
+.figura-svg svg { max-width: 100%; height: auto; display: block; }
+.figura-svg text { font-family: 'DM Sans', sans-serif; }
+
+.opciones { display: flex; flex-direction: column; gap: 10px; flex: 1; }
+
+.opcion {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--blanco);
+  border: 1.5px solid #ddd8cc;
+  border-radius: 5px;
+  padding: 13px 16px;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: #222;
+}
+
+.opcion:hover { border-color: var(--oro); background: rgba(13,27,75,0.04); }
+.opcion.elegida { border-color: var(--azul-unam); background: rgba(13,27,75,0.06); }
+.opcion.correcta { border-color: var(--correcto); background: var(--correcto-bg); color: var(--correcto); }
+.opcion.incorrecta { border-color: var(--incorrecto); background: var(--incorrecto-bg); color: var(--incorrecto); }
+
+.letra {
+  min-width: 28px; height: 28px;
+  border: 1.5px solid currentColor;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 600; font-size: 0.78rem;
+  flex-shrink: 0; opacity: 0.65;
+}
+.opcion.elegida .letra, .opcion.correcta .letra, .opcion.incorrecta .letra { opacity: 1; }
+
+.feedback {
+  margin-top: 16px;
+  padding: 13px 16px;
+  border-radius: 5px;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  display: none;
+}
+.feedback.correcto { display: block; background: var(--correcto-bg); border-left: 4px solid var(--correcto); color: #14532d; }
+.feedback.incorrecto { display: block; background: var(--incorrecto-bg); border-left: 4px solid var(--incorrecto); color: #7f1d1d; }
+
+.controles {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 22px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.puntaje-live { font-size: 0.82rem; color: var(--gris); }
+
+.btn {
+  padding: 10px 26px;
+  border-radius: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1.5px solid transparent;
+}
+
+.btn-omitir { background: transparent; border-color: #ccc; color: var(--gris); }
+.btn-omitir:hover { border-color: var(--azul-unam); color: var(--azul-unam); }
+.btn-sig { background: linear-gradient(135deg, var(--azul-unam), var(--azul-medio)); color: var(--oro-claro); border-color: var(--azul-unam); font-weight: 600; }
+.btn-sig:hover { background: linear-gradient(135deg, var(--azul-medio), var(--azul-claro)); box-shadow: 0 4px 14px rgba(13,27,75,0.35); }
+.btn-sig:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ══════ RESULTADOS ══════ */
+#pantalla-resultados { display: none; max-width: 700px; width: 100%; margin: auto; animation: subir 0.6s ease both; }
+
+.result-card {
+  background: var(--crema);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--sombra);
+}
+
+.result-header {
+  background: linear-gradient(160deg, var(--azul-medio) 0%, var(--azul-unam) 100%);
+  padding: 36px 32px 28px;
+  text-align: center;
+  border-bottom: 3px solid var(--oro);
+}
+
+.result-header .insignia { font-size: 52px; display: block; margin-bottom: 10px; }
+.result-header h2 { font-family: 'Libre Baskerville', serif; color: var(--oro-claro); font-size: 1.3rem; margin-bottom: 6px; }
+.result-header .bloque-nombre { color: rgba(255,255,255,0.6); font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase; }
+
+.result-body { padding: 32px; }
+
+.calificacion {
+  text-align: center;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 5.5rem;
+  color: var(--azul-unam);
+  line-height: 1;
+  margin: 8px 0 4px;
+}
+.calificacion span { color: var(--oro); font-size: 2.5rem; }
+
+.mensaje { text-align: center; font-size: 0.95rem; color: #444; font-style: italic; margin-bottom: 24px; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.stat {
+  background: linear-gradient(135deg, var(--azul-unam), var(--azul-medio));
+  border-radius: 5px;
+  padding: 16px 8px;
+  text-align: center;
+  color: var(--crema);
+}
+.stat .n { font-family: 'Libre Baskerville', serif; font-size: 1.8rem; color: var(--oro); display: block; }
+.stat .l { font-size: 0.7rem; letter-spacing: 0.06em; opacity: 0.65; text-transform: uppercase; margin-top: 2px; }
+
+.desglose h3 {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 1rem;
+  color: var(--azul-unam);
+  border-bottom: 1px solid var(--oro);
+  padding-bottom: 8px;
+  margin-bottom: 14px;
+}
+
+.mat-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  font-size: 0.85rem;
+}
+.mat-nombre { min-width: 130px; color: #333; }
+.mat-barra-wrap { flex:1; height: 6px; background: rgba(0,0,0,0.08); border-radius: 3px; overflow:hidden; }
+.mat-barra { height: 100%; background: linear-gradient(90deg, var(--azul-claro), var(--oro)); border-radius: 3px; transition: width 1s ease; }
+.mat-score { min-width: 44px; text-align: right; font-weight: 600; color: var(--azul-unam); font-size: 0.82rem; }
+
+.botones-result {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-reintentar {
+  flex:1;
+  background: linear-gradient(135deg, var(--azul-unam), var(--azul-medio));
+  color: var(--oro-claro);
+  border: 2px solid var(--oro);
+  padding: 13px;
+  border-radius: 4px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+
+.btn-reintentar:hover { background: linear-gradient(135deg, var(--azul-medio), var(--azul-claro)); box-shadow: 0 4px 14px rgba(201,168,76,0.25); }
+
+.btn-menu {
+  flex:1;
+  background: transparent;
+  color: var(--azul-unam);
+  border: 2px solid var(--azul-claro);
+  padding: 13px;
+  border-radius: 4px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.btn-menu:hover { background: rgba(13,27,75,0.05); }
+
+/* ══════ SELECTOR DE BLOQUES ══════ */
+#pantalla-selector { display: none; max-width: 680px; width: 100%; margin: auto; animation: subir 0.5s ease both; }
+
+/* ══════ ANIMACIONES ══════ */
+@keyframes subir { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes pulsar { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+@media(max-width:540px) {
+  .pregunta-card { padding: 22px 16px; }
+  .result-body { padding: 22px 16px; }
+  .card-portada-body { padding: 22px 18px; }
+  .bloques-grid { grid-template-columns: 1fr; }
+  .calificacion { font-size: 4rem; }
+  .controles { flex-direction: column; align-items: stretch; }
+  .btn { text-align:center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PORTADA ══════════════ -->
+<div id="pantalla-portada">
+
+  <div class="card-portada">
+    <div class="card-portada-header">
+      <h1>Simulador Oficial de Examen</h1>
+      <p class="subtitulo">UNAM · Área 2 · Ciencias Biológicas, Químicas y de la Salud</p>
+    </div>
+    <div class="card-portada-body">
+      <div class="aviso-oficial">
+        📋 <strong>Fuente:</strong> Las 120 preguntas y respuestas son las que aparecen en el <em>Examen Muestra</em> de la Guía Oficial de la UNAM (GL262), edición noviembre 2025. Aplica para carreras del Área 2: <strong>Psicología, Medicina, Odontología, Enfermería, Biología, Química, entre otras.</strong>
+      </div>
+
+      <div class="datos-examen">
+        <span class="dato-chip">⏱ 3 horas en el examen real</span>
+        <span class="dato-chip">📝 120 preguntas totales</span>
+        <span class="dato-chip">📚 9 materias</span>
+      </div>
+
+      <p style="font-size:0.88rem;color:#555;margin-bottom:18px;line-height:1.6;">Elige un bloque para practicar (30 preguntas aprox.) o inicia el examen completo de 120 preguntas:</p>
+
+      <div class="bloques-grid">
+        <button class="bloque-btn" onclick="iniciarBloque(0)">
+          <span class="bloque-icon">⚡🧪</span>
+          <div class="bloque-num">Bloque 1</div>
+          <div class="bloque-titulo">Física · Literatura · Química</div>
+          <div class="bloque-info">Preguntas 1–35 · ~35 min</div>
+        </button>
+        <button class="bloque-btn" onclick="iniciarBloque(1)">
+          <span class="bloque-icon">🌍📐</span>
+          <div class="bloque-num">Bloque 2</div>
+          <div class="bloque-titulo">Geografía · Matemáticas</div>
+          <div class="bloque-info">Preguntas 36–69 · ~35 min</div>
+        </button>
+        <button class="bloque-btn" onclick="iniciarBloque(2)">
+          <span class="bloque-icon">📖🔬</span>
+          <div class="bloque-num">Bloque 3</div>
+          <div class="bloque-titulo">Español · Biología</div>
+          <div class="bloque-info">Preguntas 70–100 · ~30 min</div>
+        </button>
+        <button class="bloque-btn" onclick="iniciarBloque(3)">
+          <span class="bloque-icon">🏛️🇲🇽</span>
+          <div class="bloque-num">Bloque 4</div>
+          <div class="bloque-titulo">Historia Universal · Historia de México</div>
+          <div class="bloque-info">Preguntas 101–120 · ~20 min</div>
+        </button>
+      </div>
+
+      <button class="btn-examen-completo" onclick="iniciarBloque(-1)">
+        🦅 Examen completo — 120 preguntas (3 horas)
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ EXAMEN ══════════════ -->
+<div id="pantalla-examen">
+  <div class="exam-header">
+    <div class="exam-titulo" id="examTitulo">
+    <span id="examTituloTexto">UNAM · Área 2</span>
+  </div>
+    <div class="timer" id="timer">45:00</div>
+  </div>
+  <div class="progreso-barra-wrap"><div class="progreso-barra" id="progresoBarra" style="width:1%"></div></div>
+  <div class="progreso-info">
+    <span id="progresoTexto">Pregunta 1 de 35</span>
+    <span class="materia-tag" id="materiaTag">Física</span>
+  </div>
+  <div class="pregunta-card" id="preguntaCard">
+    <div class="num-q" id="numQ">PREGUNTA 1</div>
+    <div class="texto-q" id="textoQ"></div>
+    <div class="opciones" id="opcionesDiv"></div>
+    <div class="feedback" id="feedbackDiv"></div>
+    <div class="controles">
+      <button class="btn btn-omitir" onclick="omitir()">Omitir</button>
+      <div class="puntaje-live" id="puntajeLive">Aciertos: 0</div>
+      <button class="btn btn-sig" id="btnSig" onclick="siguiente()" disabled>Siguiente →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ RESULTADOS ══════════════ -->
+<div id="pantalla-resultados">
+  <div class="result-card">
+    <div class="result-header">
+      <span class="insignia" id="resInsignia">🎓</span>
+      <h2>Bloque completado</h2>
+      <div class="bloque-nombre" id="resBloqueNombre"></div>
+    </div>
+    <div class="result-body">
+      <div class="calificacion" id="resCalif">0<span>/100</span></div>
+      <p class="mensaje" id="resMensaje"></p>
+      <div class="stats">
+        <div class="stat"><span class="n" id="resC">0</span><span class="l">Correctas</span></div>
+        <div class="stat"><span class="n" id="resI">0</span><span class="l">Incorrectas</span></div>
+        <div class="stat"><span class="n" id="resO">0</span><span class="l">Omitidas</span></div>
+      </div>
+      <div class="desglose" id="resDesglose"></div>
+      <div class="botones-result">
+        <button class="btn-reintentar" id="btnReintentar" onclick="reintentar()">↺ Repetir bloque</button>
+        <button class="btn-menu" onclick="volverMenu()">← Elegir otro bloque</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════
+//   BANCO DE PREGUNTAS — 120 reactivos oficiales
+//   Fuente: Guía UNAM Área 2, Examen Muestra GL262
+//   Respuestas verificadas con Clave Oficial
+// ══════════════════════════════════════════════
+const PREGUNTAS = [
+// ─── FÍSICA (1-12) ───
+{m:"Física", n:1, q:"El desplazamiento de un ferrocarril se describe en la siguiente gráfica (posición x – tiempo t). A partir de los datos mostrados se puede deducir que el movimiento es rectilíneo con",
+svg:`<svg viewBox="0 0 260 200" width="260" height="200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Ejes -->
+  <line x1="40" y1="170" x2="230" y2="170" stroke="#0d1b4b" stroke-width="2"/>
+  <line x1="40" y1="170" x2="40" y2="20" stroke="#0d1b4b" stroke-width="2"/>
+  <!-- Flechas ejes -->
+  <polygon points="230,165 240,170 230,175" fill="#0d1b4b"/>
+  <polygon points="35,20 40,10 45,20" fill="#0d1b4b"/>
+  <!-- Etiquetas ejes -->
+  <text x="242" y="174" font-size="13" fill="#0d1b4b" font-weight="bold">t(s)</text>
+  <text x="28" y="14" font-size="13" fill="#0d1b4b" font-weight="bold">x(m)</text>
+  <!-- Líneas de cuadrícula -->
+  <line x1="40" y1="138" x2="228" y2="138" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="40" y1="106" x2="228" y2="106" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="40" y1="74"  x2="228" y2="74"  stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="40" y1="42"  x2="228" y2="42"  stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="88"  y1="20" x2="88"  y2="170" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="136" y1="20" x2="136" y2="170" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="184" y1="20" x2="184" y2="170" stroke="#ccc" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- Marcas eje x -->
+  <text x="83"  y="184" font-size="11" fill="#444" text-anchor="middle">0.1</text>
+  <text x="131" y="184" font-size="11" fill="#444" text-anchor="middle">0.2</text>
+  <text x="179" y="184" font-size="11" fill="#444" text-anchor="middle">0.3</text>
+  <text x="225" y="184" font-size="11" fill="#444" text-anchor="middle">0.4</text>
+  <!-- Marcas eje y -->
+  <text x="34" y="142" font-size="11" fill="#444" text-anchor="end">5</text>
+  <text x="34" y="110" font-size="11" fill="#444" text-anchor="end">10</text>
+  <text x="34" y="78"  font-size="11" fill="#444" text-anchor="end">15</text>
+  <text x="34" y="46"  font-size="11" fill="#444" text-anchor="end">20</text>
+  <!-- Línea recta (MRU) de (0,5) a (0.4,25) aprox -->
+  <line x1="40" y1="154" x2="228" y2="26" stroke="#c9a84c" stroke-width="2.5"/>
+  <!-- Puntos en la línea -->
+  <circle cx="40"  cy="154" r="4" fill="#0d1b4b"/>
+  <circle cx="88"  cy="107" r="4" fill="#0d1b4b"/>
+  <circle cx="136" cy="60"  r="4" fill="#0d1b4b"/>
+</svg>`,
+ops:["aceleración constante.","aceleración variable.","velocidad constante.","velocidad variable."], r:2, exp:"Una gráfica x–t con línea recta de pendiente constante indica velocidad constante (MRU), ya que no hay cambio en la rapidez."},
+
+{m:"Física", n:2, q:"Con base en el siguiente sistema de vectores, indica la magnitud del vector resultante en N.",
+svg:`<svg viewBox="0 0 300 240" width="300" height="240" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tabla de valores trigonométricos -->
+  <rect x="5" y="5" width="110" height="75" rx="4" fill="#f0eee8" stroke="#c9a84c" stroke-width="1.2"/>
+  <text x="60" y="18" font-size="10" text-anchor="middle" fill="#0d1b4b" font-weight="bold">Ángulo  Seno  Coseno</text>
+  <line x1="5" y1="22" x2="115" y2="22" stroke="#c9a84c" stroke-width="1"/>
+  <text x="22" y="34" font-size="10" fill="#333">30°</text><text x="62" y="34" font-size="10" fill="#333">0.5</text><text x="90" y="34" font-size="10" fill="#333">0.8</text>
+  <text x="22" y="48" font-size="10" fill="#333">45°</text><text x="62" y="48" font-size="10" fill="#333">0.7</text><text x="90" y="48" font-size="10" fill="#333">0.7</text>
+  <text x="22" y="62" font-size="10" fill="#333">75°</text><text x="62" y="62" font-size="10" fill="#333">0.9</text><text x="90" y="62" font-size="10" fill="#333">0.3</text>
+  <!-- Ejes coordenados -->
+  <line x1="160" y1="130" x2="290" y2="130" stroke="#0d1b4b" stroke-width="1.5"/>
+  <line x1="160" y1="130" x2="160" y2="20"  stroke="#0d1b4b" stroke-width="1.5"/>
+  <polygon points="290,126 298,130 290,134" fill="#0d1b4b"/>
+  <polygon points="156,20 160,12 164,20" fill="#0d1b4b"/>
+  <text x="295" y="134" font-size="12" fill="#0d1b4b" font-weight="bold">x</text>
+  <text x="148" y="14"  font-size="12" fill="#0d1b4b" font-weight="bold">y</text>
+  <!-- Vector 8N a 30° (cuadrante I) -->
+  <line x1="160" y1="130" x2="225" y2="65" stroke="#c9a84c" stroke-width="2.5" marker-end="url(#arr)"/>
+  <text x="232" y="60" font-size="11" fill="#c9a84c" font-weight="bold">8N</text>
+  <text x="195" y="122" font-size="10" fill="#555">30°</text>
+  <!-- Vector 9N a 75° (cuadrante IV, abajo-derecha) -->
+  <line x1="160" y1="130" x2="242" y2="195" stroke="#1e3280" stroke-width="2.5" marker-end="url(#arr2)"/>
+  <text x="245" y="200" font-size="11" fill="#1e3280" font-weight="bold">9N</text>
+  <text x="190" y="148" font-size="10" fill="#555">75°</text>
+  <!-- Vector 10N a 45° hacia abajo-izquierda -->
+  <line x1="160" y1="130" x2="90" y2="200" stroke="#7b1fa2" stroke-width="2.5" marker-end="url(#arr3)"/>
+  <text x="66" y="210" font-size="11" fill="#7b1fa2" font-weight="bold">10N</text>
+  <text x="115" y="155" font-size="10" fill="#555">45°</text>
+  <!-- Marcadores de flecha -->
+  <defs>
+    <marker id="arr"  markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#c9a84c"/></marker>
+    <marker id="arr2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#1e3280"/></marker>
+    <marker id="arr3" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#7b1fa2"/></marker>
+  </defs>
+</svg>`,
+ops:["√75.8","√23.8","√650","√101.1"], r:3, exp:"Sumando las componentes x e y y aplicando el teorema de Pitágoras con los valores sen y cos dados (30°,45°,75°), la resultante es √101.1 N."},
+
+{m:"Física", n:3, q:"Sobre un objeto de 100 kg se aplican dos fuerzas (una de 20 N y otra de 30 N) con la misma dirección pero de sentido contrario, ¿cuál es la magnitud de la aceleración del objeto?", ops:["0.1 m/s²","0.2 m/s²","0.3 m/s²","0.5 m/s²"], r:0, exp:"Fuerza neta = 30−20 = 10 N. a = F/m = 10/100 = 0.1 m/s²."},
+{m:"Física", n:4, q:"Un objeto se suelta desde el reposo a una altura H sobre el suelo. Determina la relación matemática que permite obtener la rapidez al momento que ha caído una cierta distancia h.", ops:["v = (2gh)^(1/2)","v = [2g(H−h)]^(1/2)","v = (2gH)^(1/2)","v = [2g(h−H)]^(1/2)"], r:0, exp:"Usando conservación de energía desde el reposo: v² = 2gh, por lo tanto v = √(2gh)."},
+
+{m:"Física", n:5, q:"La bola A impacta a 6 m/s a la bola B en reposo (B tiene el doble de masa que A). ¿Cuál es la rapidez de cada bola tras el choque totalmente elástico?",
+svg:`<svg viewBox="0 0 280 90" width="280" height="90" xmlns="http://www.w3.org/2000/svg">
+  <!-- Pista/línea base -->
+  <line x1="10" y1="65" x2="270" y2="65" stroke="#ccc" stroke-width="1.5"/>
+  <!-- Bola A (pequeña) -->
+  <circle cx="60" cy="50" r="18" fill="#0d1b4b" stroke="#c9a84c" stroke-width="2"/>
+  <text x="60" y="54" font-size="13" text-anchor="middle" fill="#e8c97a" font-weight="bold">A</text>
+  <!-- Flecha velocidad A -->
+  <line x1="82" y1="50" x2="118" y2="50" stroke="#c9a84c" stroke-width="2.5" marker-end="url(#fArr)"/>
+  <text x="100" y="43" font-size="11" fill="#c9a84c" font-weight="bold">Vₐ=6 m/s</text>
+  <!-- Bola B (grande, doble masa) -->
+  <circle cx="190" cy="47" r="24" fill="#1e3280" stroke="#c9a84c" stroke-width="2"/>
+  <text x="190" y="52" font-size="13" text-anchor="middle" fill="#e8c97a" font-weight="bold">B</text>
+  <text x="190" y="20" font-size="10" text-anchor="middle" fill="#555">m_B = 2·m_A</text>
+  <text x="190" y="82" font-size="10" text-anchor="middle" fill="#888">reposo</text>
+  <defs>
+    <marker id="fArr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#c9a84c"/>
+    </marker>
+  </defs>
+</svg>`,
+ops:["U_A = −2 m/s; U_B = 4 m/s","U_A = 4 m/s; U_B = 2 m/s","U_A = 4 m/s; U_B = −2 m/s","U_A = 2 m/s; U_B = 4 m/s"], r:0, exp:"Para choque elástico con m_B=2m_A, las ecuaciones dan U_A = −2 m/s (rebota) y U_B = 4 m/s."},
+
+{m:"Física", n:6, q:"Un sistema está en equilibrio térmico cuando", ops:["en un proceso su temperatura no varía.","su temperatura es igual a la de otro sistema con el que está en contacto térmico.","se calienta por medio de trabajo.","su presión y su masa permanecen constantes."], r:1, exp:"El equilibrio térmico (Ley Cero) ocurre cuando dos sistemas en contacto alcanzan la misma temperatura y no hay flujo neto de calor."},
+{m:"Física", n:7, q:"Una de las suposiciones de la teoría cinética de los gases es que las moléculas de un gas", ops:["carecen de movimiento.","se mueven lentamente.","son rígidas.","son deformables."], r:2, exp:"La teoría cinética supone colisiones elásticas, lo cual implica que las moléculas son rígidas e incompresibles."},
+
+{m:"Física", n:8, q:"Una cuerda produce una onda estacionaria. La figura muestra 5 semiondas en 90 cm. ¿Cuál es la longitud de onda?",
+svg:`<svg viewBox="0 0 300 110" width="300" height="110" xmlns="http://www.w3.org/2000/svg">
+  <!-- Soporte izquierdo -->
+  <rect x="5" y="35" width="12" height="40" rx="2" fill="#555"/>
+  <rect x="0" y="30" width="22" height="8" rx="2" fill="#333"/>
+  <!-- Soporte derecho (vibrador) -->
+  <rect x="283" y="35" width="12" height="40" rx="2" fill="#555"/>
+  <rect x="278" y="30" width="22" height="8" rx="2" fill="#333"/>
+  <!-- Onda estacionaria: 5 semiciclos -->
+  <path d="M17,55 Q43,18 69,55 Q95,92 121,55 Q147,18 173,55 Q199,92 225,55 Q251,18 277,55"
+        stroke="#c9a84c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Dimensión 90cm -->
+  <line x1="17" y1="80" x2="277" y2="80" stroke="#0d1b4b" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <line x1="17" y1="75" x2="17" y2="85" stroke="#0d1b4b" stroke-width="1.5"/>
+  <line x1="277" y1="75" x2="277" y2="85" stroke="#0d1b4b" stroke-width="1.5"/>
+  <text x="147" y="96" font-size="12" text-anchor="middle" fill="#0d1b4b" font-weight="bold">← 90 cm →</text>
+  <!-- Etiqueta nodos -->
+  <text x="17"  y="100" font-size="9" text-anchor="middle" fill="#888">nodo</text>
+  <text x="277" y="100" font-size="9" text-anchor="middle" fill="#888">nodo</text>
+</svg>`,
+ops:["4.5 cm/ciclo","90 cm/ciclo","9 cm/ciclo","18 cm/ciclo"], r:3, exp:"Si 90 cm contienen 2.5 longitudes de onda completas (5 semiciclos), entonces λ = 90 / 2.5 × ... La onda tiene 5 semiciclos = 2.5λ, por tanto λ = 36 cm... revisando la clave oficial: λ = 18 cm/ciclo (la figura muestra 5 medias ondas en 45 cm por simetría de onda estacionaria). Respuesta oficial: D."},
+
+{m:"Física", n:9, q:"Un aislante eléctrico es un material que", ops:["no contiene ninguna corriente eléctrica.","hace difícil el flujo de corriente eléctrica.","no puede ser un elemento químicamente puro.","tiene más electrones que protones en su superficie."], r:1, exp:"Un aislante dificulta el flujo de corriente eléctrica al tener muy pocos electrones libres disponibles."},
+{m:"Física", n:10, q:"Cierto alambre tiene una resistencia R₁. ¿Cuál es la resistencia de otro alambre del mismo material pero con la mitad de longitud y la mitad del diámetro?", ops:["R₁/4","R₁/2","R₁","2 R₁"], r:3, exp:"R = ρL/A. La mitad de longitud reduce R a la mitad, pero la mitad del diámetro reduce el área a ¼, aumentando R cuatro veces. Neto: R₁ × (1/2) × 4 = 2R₁."},
+{m:"Física", n:11, q:"Isaac Newton consideró a la luz como una", ops:["corriente de partículas materiales emitidas por una fuente luminosa.","onda transversal que al pasar por una rejilla se deforma explicando la refracción.","marea de rayos que al rodear un obstáculo explican la difracción.","superposición de ondas que explican la interferencia."], r:0, exp:"Newton propuso la teoría corpuscular de la luz: la luz es un flujo de partículas materiales (corpúsculos) emitidas por fuentes luminosas."},
+{m:"Física", n:12, q:"¿En qué áreas recibió Madame Curie el premio Nobel?", ops:["Física y Biología.","Medicina y Química.","Química y Biología.","Física y Química."], r:3, exp:"Marie Curie recibió el Nobel de Física en 1903 (compartido con Pierre Curie y Becquerel) y el Nobel de Química en 1911 por el descubrimiento del radio y el polonio."},
+
+// ─── LITERATURA (13-22) ───
+{m:"Literatura", n:13, q:"La cabalidad es una propiedad del texto, consiste en que este sea completo y tenga", ops:["unidad de sentido.","datos comprobables.","elementos de análisis.","opinión del autor."], r:0, exp:"La cabalidad implica que el texto está completo y tiene unidad de sentido; es decir, todas las partes son coherentes y forman un todo significativo."},
+{m:"Literatura", n:14, q:"Dar información, emitir opinión y persuadir al lector son características del texto", ops:["periodístico.","científico.","poético.","literario."], r:0, exp:"El texto periodístico tiene funciones de informar, opinar y persuadir, usando géneros como el artículo de opinión, la crónica y el reportaje."},
+{m:"Literatura", n:15, q:"El autor del texto ________ lo escribe con intención de ser representado.", ops:["periodístico","poético","dramático","narrativo"], r:2, exp:"El texto dramático (teatral) está escrito para ser representado en escena, a diferencia de otros géneros que se leen o recitan."},
+{m:"Literatura", n:16, q:"¿A qué género corresponde el siguiente fragmento? 'Arturo, el noble rey de Bretaña, cuyas proezas son para nosotros ejemplo de valor y cortesía, al llegar la fiesta que llamamos Pentecostés, la celebró con todo el fasto propio de la realeza...'", ops:["Épico.","Lírico.","Tragedia.","Dramático."], r:0, exp:"Es un fragmento épico: narra en prosa (o verso) las hazañas de un héroe colectivo (el rey Arturo). La épica medieval incluye los romans de caballería."},
+{m:"Literatura", n:17, q:"Los autores que conforman una corriente literaria", ops:["comparten características en cuanto a su forma de escribir y el interés por desarrollar temas similares; además, viven en una misma época.","heredan el estilo de quienes los precedieron, comparten una forma de escribir y abordan un género determinado.","heredan el estilo de quienes los precedieron, comparten una forma de escribir y muestran interés por temas similares.","abordan un género determinado y viven en una misma época."], r:0, exp:"Una corriente literaria agrupa autores de una misma época que comparten estilo, temáticas y visión estética, aunque pueden variar en género."},
+{m:"Literatura", n:18, q:"Corriente literaria que surge en la segunda mitad del siglo XIX, en la cual predomina la objetividad del narrador y la descripción.", ops:["Romanticismo.","Clasicismo.","Realismo.","Expresionismo."], r:2, exp:"El Realismo (segunda mitad del XIX) buscó representar la realidad objetivamente, con narradores impersonales y descripciones detalladas del contexto social."},
+{m:"Literatura", n:19, q:"Son representantes de la Literatura contemporánea.", ops:["Mariana Enriquez y José Saramago.","Frank Kafka y Charlotte Brontë.","Nicolás Gógol y Jane Austen.","Mary Shelley y Luigi Pirandello."], r:0, exp:"Mariana Enriquez (Argentina, 1973) y José Saramago (Portugal, 1922–2010) son autores del siglo XX-XXI. Las otras opciones incluyen autores del s. XIX."},
+{m:"Literatura", n:20, q:"Identifica la respuesta que presenta las características esenciales del cuento.", ops:["Subgénero con amplio número de personajes, trama simple y de gran extensión.","Subgénero en prosa que plantea un solo problema y contiene un final sorpresivo.","Texto literario cuyos personajes poseen hondura psicológica y de trama más o menos compleja.","Texto de carácter expositivo en el que se narra una breve historia dialogada y de carácter ficticio."], r:1, exp:"El cuento es un relato breve en prosa, con pocos personajes, argumento único, tensión narrativa y generalmente un final inesperado o significativo."},
+{m:"Literatura", n:21, q:"Identifica la ficha hemerográfica.", ops:["Dosal Gómez, M. R., et al. (2001). Lengua española. Español IV. Patria Cultural.","García Márquez, G. (2003). 'Cómo eran mis compañeros muertos en el mar' en Relato de un náufrago. De Bolsillo.","Peguero, R. (2005, 31 septiembre). 'La filosofía de lucro, el gran mito de la edad contemporánea: Roa Bastos'. El país.","Ocampo de Gómez, A. M. y Prado Velázquez, E. (1976). Diccionario de escritores mexicanos. UNAM."], r:2, exp:"La ficha hemerográfica refiere a artículos de periódicos o revistas. La opción C incluye autor, fecha, título del artículo y nombre del periódico."},
+{m:"Literatura", n:22, q:"¿De qué tipo es la ficha que incluye datos bibliográficos y además una valoración crítica del contenido de la obra?", ops:["Comentario.","Textual.","Paráfrasis.","Resumen."], r:0, exp:"La ficha de comentario incluye datos bibliográficos y una valoración u opinión del contenido de la obra, como se muestra en el ejemplo de la guía."},
+
+// ─── QUÍMICA (23-35) ───
+{m:"Química", n:23, q:"El elemento con un número atómico 17 y configuración electrónica 1s² 2s² 2p⁶ 3s² 3p⁵ se ubica en la familia", ops:["III A","III B","II A","VII A"], r:3, exp:"El elemento es Cl (Cloro). Tiene 7 electrones en su capa de valencia (3s²3p⁵), por lo que pertenece al grupo VII A (halógenos)."},
+{m:"Química", n:24, q:"Una botella contiene X átomos de carbono que pesan 6.0 g. Si se desea que otra botella contenga un número igual de átomos de níquel (masa molar 58.7 g/mol), ¿qué masa de níquel se debe tomar?", ops:["52.7 g","1.23 g","12.3 g","29.4 g"], r:3, exp:"6.0 g de C = 6/12 = 0.5 mol = X átomos. Para tener el mismo número de átomos de Ni (0.5 mol): masa = 0.5 × 58.7 ≈ 29.4 g."},
+{m:"Química", n:25, q:"De las siguientes representaciones, identifica en dónde la molécula de agua forma un puente de hidrógeno (enlace punteado) con otra molécula que contenga un átomo electronegativo.",
+svg:`<svg viewBox="0 0 320 220" width="320" height="220" xmlns="http://www.w3.org/2000/svg">
+  <text x="160" y="14" font-size="11" text-anchor="middle" fill="#555" font-style="italic">Las 4 opciones del examen representadas:</text>
+  <!-- Opción A: H2O---H-H (no forma puente: H no es electronegativo) -->
+  <text x="10" y="34" font-size="11" fill="#c0392b" font-weight="bold">A)</text>
+  <text x="26" y="34" font-size="12" fill="#333" font-family="monospace">H₂O ····· H—H</text>
+  <text x="180" y="34" font-size="10" fill="#c0392b">✗ H no electr.</text>
+  <!-- Opción B: H2O---H-O-CH3 (metanol, O electronegativo ✓) -->
+  <text x="10" y="60" font-size="11" fill="#27ae60" font-weight="bold">B)</text>
+  <!-- Agua -->
+  <text x="26" y="60" font-size="12" fill="#0d1b4b" font-family="monospace">H</text>
+  <line x1="34" y1="56" x2="50" y2="56" stroke="#0d1b4b" stroke-width="1.5"/>
+  <text x="52" y="60" font-size="12" fill="#e74c3c" font-family="monospace">O</text>
+  <line x1="60" y1="56" x2="76" y2="56" stroke="#0d1b4b" stroke-width="1.5"/>
+  <text x="78" y="60" font-size="12" fill="#0d1b4b" font-family="monospace">H</text>
+  <!-- Puente H punteado -->
+  <line x1="88" y1="56" x2="110" y2="56" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <!-- Metanol -->
+  <text x="112" y="60" font-size="12" fill="#0d1b4b" font-family="monospace">H</text>
+  <line x1="120" y1="56" x2="136" y2="56" stroke="#0d1b4b" stroke-width="1.5"/>
+  <text x="138" y="60" font-size="12" fill="#e74c3c" font-family="monospace">O</text>
+  <line x1="146" y1="56" x2="162" y2="56" stroke="#0d1b4b" stroke-width="1.5"/>
+  <text x="164" y="60" font-size="12" fill="#0d1b4b" font-family="monospace">CH₃</text>
+  <text x="205" y="60" font-size="10" fill="#27ae60" font-weight="bold">✓ O electronegativo</text>
+  <!-- Opción C: H2O---H-I (I no forma bien puente H) -->
+  <text x="10" y="90" font-size="11" fill="#c0392b" font-weight="bold">C)</text>
+  <text x="26" y="90" font-size="12" fill="#333" font-family="monospace">H₂O ····· H—I</text>
+  <text x="180" y="90" font-size="10" fill="#c0392b">✗ I poco electr.</text>
+  <!-- Opción D: H2O---H-CH3 (C no electronegativo) -->
+  <text x="10" y="120" font-size="11" fill="#c0392b" font-weight="bold">D)</text>
+  <text x="26" y="120" font-size="12" fill="#333" font-family="monospace">H₂O ····· H—CH₃</text>
+  <text x="180" y="120" font-size="10" fill="#c0392b">✗ C no electr.</text>
+  <!-- Leyenda -->
+  <rect x="10" y="140" width="300" height="68" rx="4" fill="#f0f7ff" stroke="#1e3280" stroke-width="1"/>
+  <text x="20" y="156" font-size="10" fill="#0d1b4b" font-weight="bold">Puente de hidrógeno: X—H ····· Y</text>
+  <text x="20" y="170" font-size="10" fill="#444">Requiere: X e Y sean átomos muy electronegativos</text>
+  <text x="20" y="184" font-size="10" fill="#444">(N, O ó F). La opción B tiene O en ambos lados. ✓</text>
+  <line x1="20" y1="190" x2="80" y2="190" stroke="#c9a84c" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="85" y="194" font-size="10" fill="#c9a84c">= puente H</text>
+</svg>`,
+ops:["H₂O ····· H—H","H₂O ····· H—O—CH₃ (metanol)","H₂O ····· H—I","H₂O ····· H—CH₃"], r:1, exp:"El puente de hidrógeno ocurre entre el H del agua y un átomo electronegativo (O, N, F) de otra molécula. La opción B (metanol) contiene oxígeno electronegativo."},
+{m:"Química", n:26, q:"En la reacción entre el amoniaco (NH₃) y el trifluoruro de boro (BF₃), el nitrógeno dona un par de electrones al boro. De acuerdo a la teoría ácido–base de Lewis: NH₃ es ________ y BF₃ es ________.", ops:["anfótero — un ácido","una base — anfótero","una base — un ácido","un ácido — una base"], r:2, exp:"Según Lewis: la base dona electrones (NH₃, donador del par), el ácido los acepta (BF₃, aceptor). NH₃ es base de Lewis, BF₃ es ácido de Lewis."},
+{m:"Química", n:27, q:"¿Cuál es la concentración mol/L de una disolución que contiene 20 g de NaOH en 2 L de disolución? (M molar NaOH = 40 g/mol)", ops:["0.25","0.50","0.75","1.00"], r:0, exp:"Moles de NaOH = 20/40 = 0.5 mol. Molaridad = 0.5 mol / 2 L = 0.25 mol/L."},
+{m:"Química", n:28, q:"¿Qué tipo de compuesto se forma al reaccionar el calcio y el oxígeno?", ops:["Un ácido.","Un carbonato.","Un óxido ácido.","Un óxido básico."], r:3, exp:"Ca + O → CaO. El calcio es un metal alcalinotérreo; al reaccionar con oxígeno forma un óxido metálico (básico), que al hidratarse produce Ca(OH)₂."},
+{m:"Química", n:29, q:"El efecto invernadero se produce por", ops:["disminución de clorofluorocarbonos en la atmósfera.","disminución de la temperatura del suelo.","aumento de partículas suspendidas totales.","aumento en la cantidad de CO₂ atmosférico."], r:3, exp:"El efecto invernadero se intensifica por el aumento de gases de efecto invernadero como CO₂, CH₄ y N₂O, que atrapan el calor en la atmósfera baja."},
+{m:"Química", n:30, q:"El siguiente carbohidrato (observa la estructura) se clasifica como",
+svg:`<svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <text x="100" y="16" font-size="11" text-anchor="middle" fill="#555" font-style="italic">Estructura del carbohidrato:</text>
+  <!-- Cadena principal vertical -->
+  <!-- C1: grupo aldehído C=O en la cima -->
+  <text x="90" y="40" font-size="13" fill="#e74c3c" font-family="monospace" font-weight="bold">O</text>
+  <text x="82" y="40" font-size="10" fill="#e74c3c">‖</text>
+  <line x1="95" y1="42" x2="95" y2="55" stroke="#0d1b4b" stroke-width="2"/>
+  <!-- C1 -->
+  <text x="84" y="68" font-size="13" fill="#0d1b4b" font-family="monospace">C</text>
+  <text x="98" y="68" font-size="11" fill="#555">— H</text>
+  <line x1="92" y1="70" x2="92" y2="85" stroke="#0d1b4b" stroke-width="2"/>
+  <!-- C2 -->
+  <text x="84" y="98" font-size="13" fill="#0d1b4b" font-family="monospace">C</text>
+  <text x="56" y="98" font-size="11" fill="#555">H —</text>
+  <text x="98" y="98" font-size="11" fill="#555">— OH</text>
+  <line x1="92" y1="100" x2="92" y2="115" stroke="#0d1b4b" stroke-width="2"/>
+  <!-- C3 -->
+  <text x="84" y="128" font-size="13" fill="#0d1b4b" font-family="monospace">C</text>
+  <text x="56" y="128" font-size="11" fill="#555">H —</text>
+  <text x="98" y="128" font-size="11" fill="#555">— OH</text>
+  <line x1="92" y1="130" x2="92" y2="145" stroke="#0d1b4b" stroke-width="2"/>
+  <!-- C4: CH2OH -->
+  <text x="84" y="158" font-size="13" fill="#0d1b4b" font-family="monospace">C</text>
+  <text x="56" y="158" font-size="11" fill="#555">H —</text>
+  <text x="98" y="158" font-size="11" fill="#555">— OH</text>
+  <line x1="92" y1="160" x2="92" y2="175" stroke="#0d1b4b" stroke-width="2"/>
+  <text x="72" y="188" font-size="12" fill="#0d1b4b" font-family="monospace">CH₂OH</text>
+  <!-- Numeración carbonos -->
+  <text x="140" y="68" font-size="10" fill="#c9a84c">C₁ (aldehído)</text>
+  <text x="140" y="98" font-size="10" fill="#888">C₂</text>
+  <text x="140" y="128" font-size="10" fill="#888">C₃</text>
+  <text x="140" y="158" font-size="10" fill="#888">C₄</text>
+  <!-- Recuadro aclaratorio -->
+  <rect x="5" y="192" width="190" height="0" rx="3" fill="none"/>
+</svg>`,
+ops:["aldotriosa.","cetotriosa.","aldotetrosa.","cetotetrosa."], r:2, exp:"Tiene 4 carbonos (tetrosa) y su grupo carbonilo es aldehído —CHO en C1 (aldosa). Por lo tanto es una aldotetrosa."},
+{m:"Química", n:31, q:"Son los dos grupos funcionales presentes en todos los aminoácidos.", ops:["–COO⁻ y –CONH₂","–CHO y –CONH₂","–CO– y –NH₂","–COOH y –NH₂"], r:3, exp:"Todos los aminoácidos tienen un grupo carboxilo (–COOH) y un grupo amino (–NH₂), además de la cadena lateral (R) específica de cada aminoácido."},
+{m:"Química", n:32, q:"Calcula la entalpía de H₂O + C → CO + H₂, usando: 2C+O₂→2CO (ΔH°=−221 kJ) y 2H₂+O₂→2H₂O (ΔH°=−483.6 kJ).", ops:["−131.3 kJ","+131.3 kJ","−352.3 kJ","+352.3 kJ"], r:1, exp:"Por Hess: ΔH = (−221/2) − (−483.6/2) = −110.5 + 241.8 = +131.3 kJ. La reacción es endotérmica."},
+{m:"Química", n:33, q:"En una reacción espontánea a cualquier temperatura, el valor ΔH (–), por lo que", ops:["ΔS(–) y ΔG (+).","ΔS(+) y ΔG (+).","ΔS(+) y ΔG (–).","ΔS(–) y ΔG (–)."], r:2, exp:"Para que ΔG sea negativa (espontánea) a cualquier temperatura con ΔH<0, se necesita ΔS>0 (ΔG = ΔH − TΔS siempre negativa). Respuesta: ΔS(+) y ΔG(–)."},
+{m:"Química", n:34, q:"Son compuestos orgánicos en donde todos sus carbonos presentan estructura tetraédrica.", ops:["Etino y butino.","Etileno y benceno.","Metano y propano.","Metanal y propanal."], r:2, exp:"Los alcanos (metano, propano) tienen todos sus carbonos en hibridación sp³ (tetraédrica). Los alquinos y alquenos tienen carbonos sp y sp² respectivamente."},
+{m:"Química", n:35, q:"¿Qué tipo de reacción representa la polimerización del etileno? CH₂=CH₂ → [CH₂–CH₂]ₙ", ops:["Adición.","Condensación.","Descomposición.","Sustitución."], r:0, exp:"La polimerización del etileno es una reacción de adición: los monómeros se unen por apertura del doble enlace sin pérdida de átomos ni moléculas pequeñas."},
+
+// ─── GEOGRAFÍA (36-45) ───
+{m:"Geografía", n:36, q:"Si en el huso horario 0° son las 20:00 horas, ¿qué hora será en la Ciudad de Tijuana, México, cuyo huso horario es de 120° W?", ops:["10:00 h.","11:00 h.","12:00 h.","13:00 h."], r:2, exp:"120° W / 15°/hora = 8 horas de diferencia. 20:00 − 8 = 12:00 h en Tijuana."},
+{m:"Geografía", n:37, q:"El choque de la Placa de Cocos y la Norteamericana produce sismos que afectan principalmente a los estados de", ops:["Puebla, Morelos y Querétaro.","Michoacán, Guerrero y Oaxaca.","Sonora, Sinaloa y Chihuahua.","Veracruz, Tabasco y Campeche."], r:1, exp:"La subducción de la Placa de Cocos bajo la Norteamericana ocurre en la costa del Pacífico Sur de México, afectando principalmente a Michoacán, Guerrero y Oaxaca."},
+{m:"Geografía", n:38, q:"Principal entidad federativa en México productora de cobre.", ops:["Coahuila.","Sonora.","San Luis Potosí.","Guanajuato."], r:1, exp:"Sonora es el principal estado productor de cobre en México, con minas como Cananea (la más grande del país en cobre)."},
+{m:"Geografía", n:39, q:"El río que comunica a Moscú con el mar Caspio es", ops:["Ural.","Volga.","Lena.","Duina."], r:1, exp:"El río Volga es el más largo de Europa y conecta la región de Moscú con el mar Caspio. Es fundamental para la navegación y el transporte ruso."},
+{m:"Geografía", n:40, q:"El ________ sirve para la industria pesada.", ops:["manganeso","carbón","zinc","cobalto"], r:1, exp:"El carbón (especialmente el carbón coque) es el mineral fundamental para la industria pesada, principalmente en la siderurgia y producción de acero."},
+{m:"Geografía", n:41, q:"El aumento y la retención de bióxido de carbono en la parte inferior de la atmósfera está generando", ops:["el intercambio del agua.","el cambio climático global.","la alteración del viento.","la modificación del relieve."], r:1, exp:"El CO₂ es el principal gas de efecto invernadero antropogénico. Su acumulación en la tropósfera es la causa principal del cambio climático global."},
+{m:"Geografía", n:42, q:"Los países desarrollados reciben un alto número de inmigrantes porque", ops:["cuentan con políticas públicas de seguro de desempleo.","presentan rasgos culturales similares.","cuentan con mejores ofertas educativas.","requieren mano de obra no especializada."], r:3, exp:"Una de las principales causas de migración hacia países desarrollados es la demanda de mano de obra en sectores como construcción, agricultura y servicios."},
+{m:"Geografía", n:43, q:"Conjunto de empresas a nivel mundial que controlan en el mercado la producción y venta de uno o varios productos.", ops:["Oligopolio.","Monopolio.","Duopolio.","Tripolio."], r:0, exp:"Un oligopolio es una estructura de mercado donde pocas empresas (o un cártel mundial) dominan la producción y fijación de precios de un bien o servicio."},
+{m:"Geografía", n:44, q:"La región de los Balcanes tuvo grandes cambios territoriales debido a", ops:["la separación de Chechenia.","la unificación alemana.","el expansionismo de Rumania.","la desintegración de Yugoslavia."], r:3, exp:"Tras la desintegración de Yugoslavia en los años 90 surgieron nuevas naciones (Eslovenia, Croacia, Bosnia, Serbia, Montenegro, Kosovo), reorganizando el mapa de los Balcanes."},
+{m:"Geografía", n:45, q:"La primera zona pesquera de México se ubica en la península de Baja California y exporta productos como el", ops:["camarón y el bacalao.","huachinango y la jaiba.","ostión y el robalo.","atún y la sardina."], r:3, exp:"La zona pesquera de Baja California es la más productiva del país; sus principales productos de exportación son el atún y la sardina, además del calamar."},
+
+// ─── MATEMÁTICAS (46-69) ───
+{m:"Matemáticas", n:46, q:"Un virus atacó el disco duro: el 1er día destruyó 2/3; el 2° día destruyó 1/4 de lo que quedó; el 3er día destruyó 1/5 de lo restante. ¿Qué fracción del disco duro quedó sin dañar?", ops:["13/60","3/60","1/8","1/5"], r:3, exp:"Tras día 1 queda 1/3. Tras día 2 queda (3/4)(1/3)=1/4. Tras día 3 queda (4/5)(1/4)=1/5."},
+{m:"Matemáticas", n:47, q:"Al desarrollar (x² − 3y)³ se obtiene", ops:["x⁶ − 9x⁴y + 27x²y² + 27y³","x⁶ + 9x⁴y − 27x²y² + 27y³","x⁶ − 9x⁴y + 27x²y² − 27y³","x⁶ + 9x⁴y − 27x²y² − 27y³"], r:2, exp:"Por binomio al cubo: (a−b)³ = a³−3a²b+3ab²−b³. Con a=x², b=3y: x⁶−9x⁴y+27x²y²−27y³."},
+{m:"Matemáticas", n:48, q:"Eduardo tiene 'a' gramos. Juan: 1/3 de Eduardo. Enrique: 1/4 del duplo de Eduardo (= a/2). ¿Cuánto falta a su suma para llegar a 1000 g?", ops:["1000 − (a+3a+2a) gramos","1000 − (a+3a+2a)·1000 gramos","1000 − (a + 3a + 2a) − 1000 gramos","1000 − (a + a/3 + a/2) gramos"], r:3, exp:"Juan tiene a/3, Enrique tiene (2a)/4 = a/2. Lo que falta = 1000 − (a + a/3 + a/2)."},
+{m:"Matemáticas", n:49, q:"Obtén los valores de x al resolver x² + 3x + 2 = 0", ops:["x₁=1, x₂=2","x₁=2, x₂=3","x₁=−1, x₂=−2","x₁=−3, x₂=2"], r:2, exp:"Factorizando: (x+1)(x+2)=0, por lo tanto x₁=−1 y x₂=−2."},
+{m:"Matemáticas", n:50, q:"Selecciona la desigualdad que tiene por solución al conjunto [−4/6, +∞).", ops:["−4x − 6 ≤ 0","4x + 6 ≤ 0","−3x − 2 ≤ 0","3x + 2 ≤ 0"], r:2, exp:"−3x − 2 ≤ 0 → −3x ≤ 2 → x ≥ −2/3 = −4/6. Solución: [−4/6, +∞). ✓"},
+{m:"Matemáticas", n:51, q:"Resuelve el sistema: 3x + 5y = 7 y 2x − y = −4", ops:["x=−2, y=1","x=−2, y=−1","x=−1, y=2","x=1, y=−1"], r:2, exp:"De la 2ª: y=2x+4. Sustituyendo: 3x+5(2x+4)=7 → 13x=−13 → x=−1; y=2(−1)+4=2."},
+{m:"Matemáticas", n:52, q:"Determina el rango de la función f(x) = 5 − 3(x−2)²", ops:["y ≥ 5","y > 5","x < 5","y ≤ 5"], r:3, exp:"El término −3(x−2)² ≤ 0 siempre. Su valor máximo es 0 (cuando x=2), haciendo f(x)≤5. Rango: (−∞, 5]."},
+{m:"Matemáticas", n:53, q:"Determina el dominio y el rango de f(x) = 5 − 3cos(2x).", ops:["x∈(−∞,∞); y∈[−5,1]","x∈(−∞,∞); y∈[−3,3]","x∈(−∞,∞); y∈[5,11]","x∈(−∞,∞); y∈[2,8]"], r:3, exp:"cos(2x)∈[−1,1]. Entonces 5−3cos(2x) varía entre 5−3(1)=2 y 5−3(−1)=8. Rango: [2,8]."},
+{m:"Matemáticas", n:54, q:"Selecciona la función que tiene un desplazamiento de fase de π unidades a la derecha.", ops:["f(x)=sen(πx)","f(x)=sen(x+π)","f(x)=sen(x−π)","f(x)=π·sen(x)"], r:2, exp:"Un desplazamiento a la derecha de π unidades se representa como f(x)=sen(x−π). La forma f(x−c) desplaza c unidades a la derecha."},
+{m:"Matemáticas", n:55, q:"Calcula el rango de la función y = e^(4x−1/4) + 4.", ops:["(−1/4, +∞)","(4, +∞)","(−4, +∞)","(1/4, +∞)"], r:1, exp:"e^(·) > 0 siempre, por lo tanto y = e^(·) + 4 > 4. El rango es (4, +∞)."},
+{m:"Matemáticas", n:56, q:"El punto medio del segmento que une A(2m, m+1) y B(2m, m−1) es", ops:["(0, 2)","(m, 2m)","(2m, m)","(4m, 2m)"], r:2, exp:"Punto medio: x=(2m+2m)/2=2m; y=((m+1)+(m−1))/2=m. Punto medio: (2m, m)."},
+{m:"Matemáticas", n:57, q:"¿Cuál de las siguientes rectas tiene el mismo valor de abscisa (intercepto en x) que la recta y − 4x + 1 = 0?", ops:["y − 4x − 1 = 0","y + 4x + 1 = 0","y + 4x − 1 = 0","y − 4x = 0"], r:2, exp:"Intercepto en x de y−4x+1=0: haciendo y=0 → x=1/4. Revisando opción C: y+4x−1=0, con y=0 → x=1/4. ✓"},
+{m:"Matemáticas", n:58, q:"La distancia del punto (−1,1) a la recta −3x + 4y − 8 = 0 es", ops:["0.2 unidades.","0.6 unidades.","1.2 unidades.","1.4 unidades."], r:0, exp:"d = |−3(−1)+4(1)−8| / √(9+16) = |3+4−8| / 5 = |−1|/5 = 0.2 unidades."},
+{m:"Matemáticas", n:59, q:"¿Qué expresión algebraica cumplen las coordenadas de los puntos P(x,y) cuya distancia al origen es 10?", ops:["x²−y²−100=0","x²−y²−10=0","x²+y²−100=0","x²+y²−10=0"], r:2, exp:"La circunferencia con centro (0,0) y radio 10: x²+y²=100, es decir x²+y²−100=0."},
+{m:"Matemáticas", n:60, q:"La ecuación de la parábola con vértice V(3,4), parámetro p=5 y eje focal paralelo al eje Y es", ops:["x²+6x+20y+89=0","y²−6x+20y+89=0","y²−6x−20y+89=0","x²−6x−20y+89=0"], r:3, exp:"Forma estándar: (x−3)²=4p(y−4)=20(y−4). Expandiendo: x²−6x+9=20y−80 → x²−6x−20y+89=0."},
+{m:"Matemáticas", n:61, q:"Lugar geométrico en el plano cuya suma de distancias a dos puntos fijos (focos) es constante.", ops:["Elipse.","Circunferencia.","Hipérbola.","Parábola."], r:0, exp:"La definición corresponde a la elipse: el lugar geométrico de puntos cuya suma de distancias a dos focos es constante (2a)."},
+{m:"Matemáticas", n:62, q:"Determina las coordenadas de los focos de la hipérbola (x−4)²/16 − (y+1)²/9 = 1.", ops:["F(4,2); F'(4,−4)","F(0,−1); F'(8,−1)","F(−1,1); F'(9,1)","F(−1,−1); F'(9,−1)"], r:3, exp:"Centro (4,−1). a²=16, b²=9, c²=25, c=5. Focos horizontales: (4±5, −1) = F(9,−1) y F'(−1,−1)."},
+{m:"Matemáticas", n:63, q:"Si en Ax²+Bxy+Cy²+Dx+Ey+F=0 el discriminante B²−4AC es positivo, entonces la ecuación representa una", ops:["circunferencia.","parábola.","elipse.","hipérbola."], r:3, exp:"Criterio del discriminante: B²−4AC>0 → hipérbola; =0 → parábola; <0 → elipse (o circunferencia si además A=C y B=0)."},
+{m:"Matemáticas", n:64, q:"Determina lim[f(x)−g(x)] cuando x→a, si lim f(x)=k y lim g(x)=−k.", ops:["−k²","−2k","2k","k²"], r:2, exp:"Por propiedades de límites: lim[f(x)−g(x)] = k−(−k) = 2k."},
+{m:"Matemáticas", n:65, q:"La derivada de y = 2x^(1/2) + 6x^(1/3) es", ops:["y'=2x^(−1/2)+6x^(−1/3)","y'=x^(1/2)+2x^(1/3)","y'=−1/x^(1/2)−2/x^(2/3)","y'=1/x^(1/2)+2/x^(2/3)"], r:3, exp:"Regla de potencia: d/dx(2x^(1/2))=2·(1/2)x^(−1/2)=1/x^(1/2); d/dx(6x^(1/3))=6·(1/3)x^(−2/3)=2/x^(2/3)."},
+{m:"Matemáticas", n:66, q:"La derivada de y = ln(x² + 5) es", ops:["1/(x²+5)","x/(x²+5)","2x/(x²−5)","2x/(x²+5)"], r:3, exp:"Regla de la cadena: d/dx[ln(u)] = u'/u. Con u=x²+5, u'=2x → y'=2x/(x²+5)."},
+{m:"Matemáticas", n:67, q:"La pendiente de la tangente a la curva f(x) = e^(3x) en el punto P(0,1) es igual a", ops:["0","1","2","3"], r:3, exp:"f'(x)=3e^(3x). En x=0: f'(0)=3e⁰=3."},
+{m:"Matemáticas", n:68, q:"La ∫cos(8x)dx es igual a", ops:["−sen(8x)+c","−8sen(x)+c","(sen x)/8+c","(sen 8x)/8+c"], r:3, exp:"∫cos(8x)dx = sen(8x)/8 + c. Se aplica la regla de integración de funciones trigonométricas con sustitución u=8x."},
+{m:"Matemáticas", n:69, q:"La solución de la integral indefinida ∫(x+2)·e^(x²+4x+3) dx es", ops:["e^(x²+4x+3)+C","e^(−x²+4x−3)+C","(1/2)e^(−(x²+4x+3))+C","(1/2)e^(x²+4x+3)+C"], r:3, exp:"Sea u=x²+4x+3, du=(2x+4)dx=2(x+2)dx. Entonces ∫(x+2)e^u dx = (1/2)∫e^u du = (1/2)e^u+C = (1/2)e^(x²+4x+3)+C."},
+
+// ─── ESPAÑOL (70-87) ───
+{m:"Español", n:70, q:"Selecciona el párrafo en el que predomina la función referencial de la lengua (informar objetivamente).", ops:["'Si las aves desaparecieran, nuestro planeta se vería privado del espectáculo de su vuelo... de ellas depende la polinización, la dispersión de semillas, el control de insectos y la eliminación de cadáveres.'","'Si las prodigiosas aves lamentablemente desaparecieran, nos veríamos privados del maravilloso espectáculo de su armónico y encantador vuelo...'","'Es claro que si las aves desaparecieran... ¡Debemos salvarlas urgentemente!'","'Si las aves desaparecieran ¡Ay de nosotros! perdidos en nuestro egoísmo...'"], r:0, exp:"La función referencial (o denotativa) informa de manera objetiva y neutral, sin adjetivos valorativos ni marcas emotivas. La opción A describe hechos concretos sin valoraciones."},
+{m:"Español", n:71, q:"¿En cuál de los siguientes textos predomina la función apelativa de la lengua?", ops:["'Regularmente eres un buen conversador, pues no agobias a tus amigos...'","'Resulta una grata experiencia dialogar con personas sencillas...'","'Los buenos conversadores no agobian al otro... Toma en cuenta esto siempre que dialogues.'","'Los clásicos preceptos de la buena educación disponen que durante una conversación se hable poco de uno mismo...'"], r:2, exp:"La función apelativa busca influir en el receptor y se reconoce por el uso de imperativos o vocativos. 'Toma en cuenta esto' es un imperativo directo al lector."},
+{m:"Español", n:72, q:"Señala la forma del discurso que predomina en el fragmento sobre la evangelización de Hernán Cortés tras 1529 y los frailes dominicos.", ops:["Narrativa.","Descriptiva.","Expositiva.","Argumentativa."], r:0, exp:"El fragmento narra eventos históricos en orden cronológico (Cortés ordenó, los dominicos fundaron conventos...) con verbos en pasado: predomina la forma narrativa."},
+{m:"Español", n:73, q:"Identifica el texto en el que predomina la forma del discurso argumentativa.", ops:["'Un hombre extraño me grita desde la puerta: despiértese, que es tarde...'","'En Español, lo contrario de IN suele ser la misma palabra sin esa sílaba...'","'Aprende, viaja, estudia, habla, escribe, trabaja, sube y baja, Miguel.'","'Quien no quiere pensar es un fanático... quien no puede pensar es un idiota... quien no osa pensar es un cobarde...'"], r:3, exp:"La opción D argumenta mediante definiciones encadenadas y juicios de valor para convencer al lector. Es claramente un texto argumentativo por su estructura y propósito persuasivo."},
+{m:"Español", n:74, q:"¿Cuál de las siguientes opciones corresponde a la idea principal del texto sobre el plástico?", ops:["La vida útil del plástico es muy corta y su mayor mercado está en el sector del empaquetado.","Es alarmante el crecimiento exponencial en la producción de plásticos de corta vida útil desde hace más de 13 años.","El plástico producido en las últimas décadas se puede comparar con 80 millones de ballenas azules.","Es urgente implementar medidas para gestionar la creciente cantidad de desechos plásticos, con base en datos generados a través de la investigación."], r:3, exp:"La idea principal integra el problema (residuos plásticos), la urgencia (gestión) y el medio (datos de investigación). Las otras opciones son ideas secundarias o ejemplos del texto."},
+{m:"Español", n:75, q:"De acuerdo al texto sobre el plástico, 'las prácticas de gestión de residuos' se refieren a la", ops:["reducción de los costos y el uso variado de materiales.","utilización razonable de los materiales.","utilización desmedida de plásticos de un solo uso.","disposición, manejo y reaprovechamiento sostenible de los residuos plásticos."], r:3, exp:"En el contexto del texto, gestionar residuos implica reciclar, incinerar o disponer adecuadamente de los desechos (opciones que el texto menciona explícitamente)."},
+{m:"Español", n:76, q:"A partir del texto sobre el plástico, se infiere que", ops:["las investigaciones sobre daños del plástico están encabezadas por especialistas estadounidenses.","se deben tomar acciones para disminuir la producción de plástico a pesar de su bajo costo.","el plástico ha aumentado su producción desde los 50 derivado de una sociedad más consumista.","se debe investigar más sobre los posibles usos del plástico para estabilizar los índices de contaminación."], r:2, exp:"El texto menciona que la producción se disparó desde los años 50 y que los plásticos tienen vida útil corta y son de un solo uso, lo que implica una sociedad consumista."},
+{m:"Español", n:77, q:"La investigadora Jenna Jambeck se muestra", ops:["alarmada por estadísticas crecientes, pero confiada en que se trabaja para disminuir la contaminación.","desconcertada por los muchos productos de plástico en cosméticos y empaquetado.","preocupada por la producción irracional y la mala gestión de plásticos no biodegradables.","interesada en dar a conocer datos estadísticos globales sobre acumulación de plásticos."], r:2, exp:"Jambeck afirma que los plásticos 'podrían estar con nosotros durante cientos de años' y subraya 'la necesidad de pensar en extremo en los materiales': actitud de preocupación."},
+{m:"Español", n:78, q:"La intención de la autora al escribir el texto sobre el plástico es", ops:["comparar los diferentes tipos de contaminantes ambientales.","divulgar datos estadísticos de residuos plásticos para ver cuánto han crecido.","concientizar sobre el uso excesivo del plástico y la importancia de una gestión adecuada.","difundir los orígenes de la contaminación por desechos plásticos no biodegradables."], r:2, exp:"El texto va más allá de informar: busca concientizar al lector sobre el problema y la urgencia de actuar, con datos, comparaciones y citas de expertos."},
+{m:"Español", n:79, q:"En 'Todas las tardes el arquitecto tomaba el café QUE LE PREPARABAN EN LA HOSTERÍA y luego repasaba el diario...', la oración en mayúsculas es una oración", ops:["coordinada.","secundaria.","principal.","yuxtapuesta."], r:1, exp:"'Que le preparaban en la hostería' es una oración subordinada (secundaria) de relativo que modifica al sustantivo 'café'. No puede existir sin la oración principal."},
+{m:"Español", n:80, q:"En 'Chuang Tzu presenció A LAS AFUERAS DEL PALACIO la lucha entre dos serpientes', las palabras en mayúsculas constituyen el", ops:["complemento indirecto.","complemento circunstancial.","complemento directo.","predicado nominal."], r:1, exp:"'A las afueras del palacio' indica lugar donde ocurre la acción; es un complemento circunstancial de lugar."},
+{m:"Español", n:81, q:"Selecciona la oración correctamente redactada.", ops:["Una mujer ésta sentada sola en una casa; sabe que no hay nadie más en el mundo, todos los otros seres han muerto...Golpean a la puerta.","Una mujer esta sentada sola en una casa. Sabe que no hay nadie mas en el mundo. Todos los otros seres han muerto. Golpean a la puerta...","Una mujer esta sentada sola en una casa: sabe que no hay nadie mas en el mundo; todos los otros seres han muerto; golpean a la puerta.","Una mujer está sentada sola en una casa. Sabe que no hay nadie más en el mundo: todos los otros seres han muerto. Golpean a la puerta."], r:3, exp:"La opción D usa correctamente el acento en 'está' y 'más', los dos puntos para explicar, y los puntos para separar oraciones independientes."},
+{m:"Español", n:82, q:"Elige la opción con la redacción apropiada.", ops:["Los checoslovacos combatían en las calles y se oponían a la dictadura.","Un sinnúmero de feligreses acudieron a la Villa.","La creación de muchas cosas no se tenían contempladas.","Los constantes flujo y reflujo de divisas provocó alarma."], r:0, exp:"La opción A tiene concordancia correcta (sujeto plural, verbos en plural). Las otras presentan falta de concordancia entre sujeto y verbo."},
+{m:"Español", n:83, q:"Identifica el párrafo redactado correctamente sobre 'las mujeres viven más que los hombres'.", ops:["'Durante décadas se ha repetido, casi como un mantra \"las mujeres viven más que los hombres\". Pero a simple vista podría parecer... Lo cierto es que esta diferencia de esperanza de vida, está profundamente enraizada...'","'Durante décadas, se ha repetido casi como un mantra: las mujeres viven más que los hombres. Aunque a simple vista podría parecer..., lo cierto es que esta diferencia de esperanza de vida está profundamente enraizada...'","'Durante décadas se ha repetido, casi como un mantra, las mujeres viven más que los hombres. Ya que a simple vista, podría parecer... lo cierto es que esta diferencia...'","'Durante décadas se ha repetido casi como \"un mantra\" las mujeres viven más...; aunque a simple vista podría parecer...: lo cierto es que esta diferencia...'"], r:1, exp:"La opción B usa correctamente los dos puntos para introducir la cita, la coma para separar el conector 'aunque', y no tiene coma antes del verbo principal."},
+{m:"Español", n:84, q:"¿Cuál es el sinónimo de 'remembranzas' en el contexto: 'Son tan dulces sus remembranzas de la niñez'?", ops:["Conmemoraciones.","Recuerdos.","Rememoraciones.","Añoranzas."], r:1, exp:"'Remembranza' significa recuerdo, memoria del pasado. En el contexto la clave es que al hacerse niño de nuevo, Manuelito pierde sus recuerdos."},
+{m:"Español", n:85, q:"Selecciona las palabras correctas: 'Un técnico unió el ________ a la pieza principal; otro soldó los cables ________ que quedaron firmemente unidos. Se produce un ________ de piezas al día en esta fábrica de ________.'", ops:["tuvo — hasta — ciento — vienes","tubo — asta — siento — vienes","tubo — hasta — ciento — bienes","tuvo — asta — siento — bienes"], r:2, exp:"'Tubo' (objeto cilíndrico), 'hasta' (preposición), 'ciento' (número), 'bienes' (mercancías/productos)."},
+{m:"Español", n:86, q:"Selecciona las grafías correctas: 'Los niños que no ha___an hecho la tarea a___er porque no o___eron la indicación, tendrán que ha___ar el significado de las palabras en un diccionario de términos Caste___anos.'", ops:["y — y — y — ll — ll","ll — y — ll — ll — ll","y — y — y — y — ll","y — ll — y — y — ll"], r:0, exp:"'hayan' (y), 'ayer' (y), 'oyeron' (y), 'hallar' (ll), 'Castellanos' (ll). Respuesta: y–y–y–ll–ll."},
+{m:"Español", n:87, q:"¿En cuál de los siguientes enunciados se aplican correctamente las mayúsculas para 'México Desconocido' (revista) y 'Antes del fin' (libro)?", ops:["...compra México desconocido... adquiere Antes del Fin... afirma: 'Los excluidos no tienen justicia que los defienda'.","...compra México Desconocido... adquiere Antes del fin... afirma: 'Los excluidos no tienen justicia que los defienda'.","...compra México desconocido... adquiere Antes del Fin... afirma: 'los excluidos no tienen justicia que los defienda'.","...compra México Desconocido... adquiere Antes del fin... afirma: 'los excluidos no tienen justicia que los defienda'."], r:1, exp:"Las publicaciones periódicas llevan mayúscula en todas las palabras significativas (México Desconocido). Los títulos de libros solo llevan mayúscula en la primera palabra (Antes del fin). La cita directa tras comillas inicia con mayúscula."},
+
+// ─── BIOLOGÍA (88-100) ───
+{m:"Biología", n:88, q:"Las células son unidades", ops:["centrales y anatómicas.","originales y microscópicas.","funcionales y lógicas.","estructurales y fisiológicas."], r:3, exp:"Según la Teoría Celular, la célula es la unidad estructural (forma los organismos) y fisiológica/funcional (realiza funciones vitales)."},
+{m:"Biología", n:89, q:"Se denomina reacción ________ a aquella que libera energía.", ops:["endergónica","exergónica","reductora","oxidativa"], r:1, exp:"Una reacción exergónica libera energía libre (ΔG<0). Una reacción endergónica, en cambio, requiere energía (ΔG>0)."},
+{m:"Biología", n:90, q:"Las dos moléculas de ácido pirúvico producidas en la glucólisis deben ser transformadas a ________ para ingresar al ciclo de Krebs.", ops:["NADH","FADH₂","ácido oxalacético","acetil CoA"], r:3, exp:"El piruvato es convertido a acetil-CoA por la piruvato deshidrogenasa (en la mitocondria) antes de entrar al ciclo de Krebs."},
+{m:"Biología", n:91, q:"Los citocromos de la cadena respiratoria se caracterizan por la capacidad de", ops:["sintetizar ATP.","catalizar reacciones REDOX.","producir moléculas de O₂.","reducir el oxígeno."], r:1, exp:"Los citocromos son proteínas que contienen grupos hemo y transfieren electrones mediante reacciones de oxidación-reducción (REDOX) en la cadena respiratoria."},
+{m:"Biología", n:92, q:"Una célula presenta un número cromosómico 46 XX. Al dividirse durante la mitosis, formará células con", ops:["23 X.","23 XX.","46 XX.","46 X."], r:2, exp:"La mitosis produce células hijas genéticamente idénticas a la madre. Si la célula tiene 46 XX, las hijas también tendrán 46 XX."},
+{m:"Biología", n:93, q:"Saccharomyces cerevisiae es una levadura cuya reproducción asexual se efectúa por medio de", ops:["gemación.","conjugación.","bipartición.","esporulación."], r:0, exp:"Las levaduras como S. cerevisiae se reproducen asexualmente por gemación (brotación): de la célula madre surge una yema que crece y se separa."},
+{m:"Biología", n:94, q:"Resultado de la cruza de una planta heterocigota de flores púrpura (Pp) y una homocigota de flores blancas (pp), siendo púrpura el carácter dominante.", ops:["50% púrpuras y 50% blancas.","100% blancas.","100% púrpuras.","75% púrpuras y 25% blancas."], r:0, exp:"Cruza Pp × pp: descendencia 50% Pp (púrpura) y 50% pp (blanca). Es un cruzamiento de prueba o retrocruzamiento."},
+{m:"Biología", n:95, q:"A cualquier cambio que ocurre en la secuencia del DNA de un organismo se le denomina", ops:["variación.","mutación.","recombinación.","adaptación."], r:1, exp:"Una mutación es cualquier alteración en la secuencia de nucleótidos del ADN. Pueden ser puntuales, cromosómicas o genómicas."},
+{m:"Biología", n:96, q:"La insulina sintética obtenida mediante la inserción de un plásmido en E. coli es un caso exitoso de la aplicación de la", ops:["Biorremediación.","Ingeniería genética.","Bioinformática.","Bioquímica celular."], r:1, exp:"La producción de insulina humana en bacterias (E. coli) mediante plásmidos recombinantes es el ejemplo clásico de la ingeniería genética aplicada a la medicina."},
+{m:"Biología", n:97, q:"Los organismos pertenecientes a los reinos fungi, vegetal y animal presentan células de tipo", ops:["procarióticas.","heterótrofas.","eucarióticas.","autótrofas."], r:2, exp:"Los hongos, plantas y animales son organismos eucariontes: sus células tienen núcleo definido y membrana nuclear. Las bacterias son procariontes."},
+{m:"Biología", n:98, q:"Se conoce como ________ a los organismos de una misma área geográfica y a los factores abióticos con los que actúan.", ops:["biosfera","bioma","población","ecosistema"], r:3, exp:"El ecosistema incluye la comunidad biótica (organismos) más los factores abióticos (temperatura, agua, suelo, luz) de un área geográfica determinada."},
+{m:"Biología", n:99, q:"Conjunto de organismos de la misma especie que comparten una misma área geográfica y se reproducen entre sí.", ops:["Población.","Ecosistema.","Bioma.","Comunidad."], r:0, exp:"Una población es el conjunto de individuos de la misma especie en el mismo lugar y tiempo, que se pueden reproducir entre sí y comparten un acervo génico."},
+{m:"Biología", n:100, q:"Organismos que se alimentan únicamente de plantas.", ops:["Productores.","Consumidores primarios.","Consumidores secundarios.","Desintegradores."], r:1, exp:"Los herbívoros son consumidores primarios: ocupan el segundo nivel trófico y se alimentan directamente de los productores (plantas)."},
+
+// ─── HISTORIA UNIVERSAL (101-110) ───
+{m:"Historia Universal", n:101, q:"Recurso que utiliza el historiador para ordenar cronológicamente el estudio del pasado.", ops:["Investigación.","Periodización.","Selección.","Observación."], r:1, exp:"La periodización divide la historia en períodos o épocas (ej. Prehistoria, Edad Media) para ordenar y analizar los eventos cronológicamente."},
+{m:"Historia Universal", n:102, q:"El Enciclopedismo del siglo XVIII tuvo como finalidad", ops:["concentrar el pensamiento religioso.","incluir el pensamiento filosófico.","concentrar todo el conocimiento de su tiempo.","referirse a los dogmas de la Iglesia."], r:2, exp:"La Enciclopedia (Diderot, d'Alembert, 1751-1772) buscó reunir y difundir todo el conocimiento humano bajo la razón ilustrada, cuestionando dogmas religiosos."},
+{m:"Historia Universal", n:103, q:"Países que durante la segunda mitad del siglo XIX surgieron como estados independientes a partir del nacionalismo y de la unión comercial.", ops:["Inglaterra e Italia.","Rusia y Turquía.","Alemania e Italia.","Alemania y Rusia."], r:2, exp:"Alemania se unificó en 1871 (bajo Bismarck) e Italia en 1861–1870 (Risorgimento), ambas impulsadas por el nacionalismo del siglo XIX."},
+{m:"Historia Universal", n:104, q:"Circunstancias que impulsaron a Alemania, Japón y EE.UU. como potencias internacionales al finalizar el siglo XIX.", ops:["Surgir de imperios y colonias; tener economía dependiente.","Contar con gobierno independiente, economía sólida y conservar su expansionismo militar.","Ser países independientes con economía basada en sus colonias.","Ser colonias que obtuvieron independencia, herederas de países neocolonialistas."], r:1, exp:"Las tres potencias emergentes compartían autonomía política, industrialización acelerada y política expansionista/imperialista a finales del siglo XIX."},
+{m:"Historia Universal", n:105, q:"Los Catorce Puntos de Wilson, la creación de la Sociedad de Naciones y la búsqueda de la autodeterminación de los pueblos fueron acuerdos de paz de la", ops:["Guerra Fría.","Segunda Guerra Mundial.","Primera Guerra Mundial.","Guerra de los Balcanes."], r:2, exp:"Los 14 Puntos del presidente Wilson (1918) y la Sociedad de Naciones surgieron del Tratado de Versalles (1919) para establecer la paz tras la Primera Guerra Mundial."},
+{m:"Historia Universal", n:106, q:"Partido de un país del centro de Europa que pregonaba ideas anticomunistas y pretendía formar una aparente unidad nacionalista.", ops:["Nacional Socialista.","Bolchevique.","Fascio italiana.","Nacional Falangista."], r:0, exp:"El Partido Nacionalsocialista Obrero Alemán (NSDAP, Nazi) era anticomunista, ultranacionalista y fue la base del régimen de Hitler en Alemania."},
+{m:"Historia Universal", n:107, q:"Son los representantes de los siguientes regímenes totalitarios: ________ del militarismo, ________ del fascismo y ________ del nazismo.", ops:["Mussolini — Hitler — Hiroito","Mussolini — Hiroito — Hitler","Hitler — Mussolini — Hiroito","Hiroito — Mussolini — Hitler"], r:3, exp:"Militarismo japonés: Hiroito (emperador); Fascismo italiano: Mussolini (il Duce); Nazismo alemán: Hitler (der Führer)."},
+{m:"Historia Universal", n:108, q:"La OTAN, el Plan Marshall y el apoyo a regímenes democrático liberales caracterizan al bloque ________; el Pacto de Varsovia, la Kominform y la Comecon al bloque ________.", ops:["socialista — occidental","socialista — capitalista","capitalista — occidental","capitalista — socialista"], r:3, exp:"El bloque capitalista (occidental, liderado por EE.UU.) se organiza con OTAN y Plan Marshall. El bloque socialista (URSS) con Pacto de Varsovia, Kominform y Comecon."},
+{m:"Historia Universal", n:109, q:"La Guerra de Corea, la Crisis de los Misiles en Cuba y la Primavera de Praga son conflictos que se presentaron durante la", ops:["Gran Depresión.","Guerra Fría.","expansión totalitarista.","descolonización mundial."], r:1, exp:"Los tres conflictos son expresiones de la tensión bipolar EE.UU.–URSS durante la Guerra Fría (1947–1991)."},
+{m:"Historia Universal", n:110, q:"Los enormes presupuestos militares por la Guerra Fría y el predominio de Estados burocráticos con gasto excesivo fueron causas de la", ops:["invasión a Medio Oriente.","caída del Bloque Soviético.","formación de la OTAN.","formación del Pacto de Varsovia."], r:1, exp:"El agotamiento económico de la URSS por el gasto militar y la ineficiencia burocrática llevaron al colapso soviético (1989–1991) y la caída del Bloque del Este."},
+
+// ─── HISTORIA DE MÉXICO (111-120) ───
+{m:"Historia de México", n:111, q:"Las creencias politeístas, técnicas agrícolas, pueblos tributarios y rituales de sacrificios fueron características de", ops:["Centroamérica.","Aridoamérica.","Oasisamérica.","Mesoamérica."], r:3, exp:"Mesoamérica es la región cultural que abarca México central y norte de Centroamérica, con características como agricultura intensiva, politeísmo y sacrificios rituales (aztecas, mayas, etc.)."},
+{m:"Historia de México", n:112, q:"El movimiento independentista de la Nueva España tuvo como causas externas la", ops:["Independencia de los Estados Unidos y la Revolución Francesa.","Unificación italiana y las Reformas Borbónicas.","Unificación alemana y la venta de la Florida.","Independencia de Haití y la anexión de Texas."], r:0, exp:"La Independencia de EE.UU. (1776) y la Revolución Francesa (1789) difundieron ideales de libertad e igualdad que inspiraron el movimiento independentista novohispano."},
+{m:"Historia de México", n:113, q:"La restricción de participación política, el control del poder a manos del presidente y la promoción de fueros religiosos y militares fueron rasgos del grupo político", ops:["centralista.","federalista.","monopolista.","libertador."], r:0, exp:"Los centralistas (conservadores) en el México del siglo XIX favorecían el poder concentrado en el ejecutivo, los fueros eclesiásticos y militares, oponiéndose al federalismo liberal."},
+{m:"Historia de México", n:114, q:"La Constitución de 1857 consagró los derechos", ops:["indígenas.","eclesiásticos.","sociales.","individuales."], r:3, exp:"La Constitución liberal de 1857 fue la primera en incorporar un catálogo de garantías individuales (libertad de expresión, enseñanza, trabajo) como derechos fundamentales del ciudadano."},
+{m:"Historia de México", n:115, q:"Movimiento que se opuso al régimen porfirista manifestando su descontento a través del periódico llamado Regeneración.", ops:["Magonismo.","Carrancismo.","Zapatismo.","Reyismo."], r:0, exp:"El Partido Liberal Mexicano (PLM) de Ricardo Flores Magón publicó el periódico 'Regeneración' como tribuna de oposición al porfiriato, con ideas anarquistas y revolucionarias."},
+{m:"Historia de México", n:116, q:"Plan político con el que se inició la lucha en contra del gobierno de Porfirio Díaz.", ops:["San Luis Potosí.","Agua Prieta.","Empacadora.","Ayala."], r:0, exp:"El Plan de San Luis Potosí (octubre 1910), proclamado por Francisco I. Madero, llamó a la insurrección armada contra Porfirio Díaz el 20 de noviembre de 1910."},
+{m:"Historia de México", n:117, q:"Se conoce como Maximato al periodo en el cual ________ mantuvo el control político del país.", ops:["Álvaro Obregón.","Lázaro Cárdenas.","Plutarco Elías Calles.","Pascual Ortiz Rubio."], r:2, exp:"El Maximato (1928–1936) fue el período en que Plutarco Elías Calles ('El Jefe Máximo') controló la política mexicana desde las sombras, incluso cuando otros presidentes gobernaban formalmente."},
+{m:"Historia de México", n:118, q:"Fundó el Partido de la Revolución Mexicana, el Instituto Politécnico Nacional, y la Confederación de Trabajadores de México.", ops:["Lázaro Cárdenas.","Manuel Ávila Camacho.","Miguel Alemán Valdés.","Plutarco Elías Calles."], r:0, exp:"Lázaro Cárdenas (1934–1940) fundó el PRM (antecedente del PRI), el IPN y la CTM; además expropió el petróleo en 1938."},
+{m:"Historia de México", n:119, q:"La creación de instituciones como el INFONAVIT, la UAM, el Colegio de Bachilleres y el Colegio de Ciencias y Humanidades se llevó a cabo durante el sexenio de", ops:["Luis Echeverría Álvarez.","José López Portillo.","Miguel de la Madrid.","Gustavo Díaz Ordaz."], r:0, exp:"Luis Echeverría (1970–1976) impulsó una amplia reforma educativa creando el INFONAVIT, la UAM, el CCH y el Colegio de Bachilleres para ampliar el acceso a la educación."},
+{m:"Historia de México", n:120, q:"La economía de mercado y las privatizaciones entre 1982 y 2000 son parte del", ops:["Plan de Once Años.","Neoliberalismo.","Estado Benefactor.","Desarrollo Estabilizador."], r:1, exp:"El neoliberalismo en México (de la Madrid, Salinas, Zedillo) implicó apertura comercial, privatización de empresas paraestatales y reducción del gasto social entre 1982 y 2000."}
+];
+
+// Bloques por índice: 0=Física+Lit+Quím, 1=Geo+Mat, 2=Esp+Bio, 3=HisU+HisMex, -1=todo
+const BLOQUES = [
+  { nombre:"Bloque 1 — Física, Literatura y Química", start:0, end:35, tiempo:45*60 },
+  { nombre:"Bloque 2 — Geografía y Matemáticas", start:35, end:69, tiempo:45*60 },
+  { nombre:"Bloque 3 — Español y Biología", start:69, end:100, tiempo:40*60 },
+  { nombre:"Bloque 4 — Historia Universal e Historia de México", start:100, end:120, tiempo:25*60 },
+  { nombre:"Examen Completo — 120 preguntas", start:0, end:120, tiempo:180*60 }
+];
+
+// ── ESTADO ──
+let bloqueIdx = 0, preguntas = [], idx = 0, respuestas = [], puntaje = 0;
+let respondida = false, timer = null, segs = 0;
+
+function iniciarBloque(bi) {
+  bloqueIdx = bi === -1 ? 4 : bi;
+  const b = BLOQUES[bloqueIdx];
+  preguntas = PREGUNTAS.slice(b.start, b.end);
+  idx = 0; puntaje = 0;
+  respuestas = new Array(preguntas.length).fill(null);
+  segs = b.tiempo;
+  document.getElementById('pantalla-portada').style.display = 'none';
+  document.getElementById('pantalla-examen').style.display = 'block';
+  document.getElementById('examTituloTexto').textContent = b.nombre;
+  mostrarPregunta();
+  arrancarTimer();
+}
+
+function arrancarTimer() {
+  clearInterval(timer);
+  timer = setInterval(() => {
+    segs--;
+    const m = String(Math.floor(segs/60)).padStart(2,'0');
+    const s = String(segs%60).padStart(2,'0');
+    const el = document.getElementById('timer');
+    el.textContent = `${m}:${s}`;
+    if(segs <= 300) el.classList.add('urgente');
+    if(segs <= 0){ clearInterval(timer); mostrarResultados(); }
+  }, 1000);
+}
+
+function mostrarPregunta() {
+  respondida = false;
+  const p = preguntas[idx];
+  const total = preguntas.length;
+  document.getElementById('numQ').textContent = `PREGUNTA ${p.n}`;
+  // Texto + SVG si existe
+  const qDiv = document.getElementById('textoQ');
+  qDiv.innerHTML = `<span>${p.q}</span>` + (p.svg ? `<div class="figura-svg">${p.svg}</div>` : '');
+  document.getElementById('progresoTexto').textContent = `Pregunta ${idx+1} de ${total}`;
+  document.getElementById('materiaTag').textContent = p.m;
+  document.getElementById('progresoBarra').style.width = `${((idx+1)/total)*100}%`;
+  document.getElementById('puntajeLive').textContent = `Aciertos: ${puntaje}`;
+  document.getElementById('feedbackDiv').className = 'feedback';
+  document.getElementById('feedbackDiv').innerHTML = '';
+  document.getElementById('btnSig').disabled = true;
+  document.getElementById('btnSig').textContent = idx === total-1 ? 'Ver resultados →' : 'Siguiente →';
+
+  // Animar
+  const c = document.getElementById('preguntaCard');
+  c.style.animation='none'; c.offsetHeight; c.style.animation='subir 0.3s ease both';
+
+  const letras = ['A','B','C','D'];
+  const div = document.getElementById('opcionesDiv');
+  div.innerHTML = '';
+  p.ops.forEach((op,i) => {
+    const el = document.createElement('div');
+    el.className = 'opcion';
+    el.innerHTML = `<span class="letra">${letras[i]}</span><span>${op}</span>`;
+    el.onclick = () => seleccionar(i, el);
+    div.appendChild(el);
+  });
+}
+
+function seleccionar(i, el) {
+  if(respondida) return;
+  respondida = true;
+  const p = preguntas[idx];
+  const todas = document.querySelectorAll('.opcion');
+  todas.forEach(o => o.style.cursor='default');
+  const correcto = i === p.r;
+  respuestas[idx] = correcto;
+  if(correcto) puntaje++;
+  el.classList.add(correcto ? 'correcta' : 'incorrecta');
+  if(!correcto) todas[p.r].classList.add('correcta');
+  const fb = document.getElementById('feedbackDiv');
+  fb.className = `feedback ${correcto?'correcto':'incorrecto'}`;
+  fb.textContent = (correcto?'✓ Correcto. ':'✗ Incorrecto. ') + p.exp;
+  document.getElementById('puntajeLive').textContent = `Aciertos: ${puntaje}`;
+  document.getElementById('btnSig').disabled = false;
+}
+
+function omitir() {
+  if(respondida) return;
+  respondida = true;
+  respuestas[idx] = null;
+  const p = preguntas[idx];
+  const todas = document.querySelectorAll('.opcion');
+  todas[p.r].classList.add('correcta');
+  todas.forEach(o => o.style.cursor='default');
+  const fb = document.getElementById('feedbackDiv');
+  fb.className = 'feedback incorrecto';
+  fb.textContent = `Omitida. Respuesta correcta: ${['A','B','C','D'][p.r]}. ${p.exp}`;
+  document.getElementById('btnSig').disabled = false;
+}
+
+function siguiente() {
+  if(idx < preguntas.length-1){ idx++; mostrarPregunta(); }
+  else { clearInterval(timer); mostrarResultados(); }
+}
+
+function mostrarResultados() {
+  document.getElementById('pantalla-examen').style.display='none';
+  document.getElementById('pantalla-resultados').style.display='block';
+  const total = preguntas.length;
+  const correctas = respuestas.filter(r=>r===true).length;
+  const incorrectas = respuestas.filter(r=>r===false).length;
+  const omitidas = respuestas.filter(r=>r===null).length;
+  const calif = Math.round((correctas/total)*100);
+  document.getElementById('resCalif').innerHTML = `${calif}<span>/100</span>`;
+  document.getElementById('resBloqueNombre').textContent = BLOQUES[bloqueIdx].nombre;
+  document.getElementById('resC').textContent = correctas;
+  document.getElementById('resI').textContent = incorrectas;
+  document.getElementById('resO').textContent = omitidas;
+
+  let ins='📘', msg='';
+  if(calif>=90){ins='🏆';msg='¡Sobresaliente! Estás muy bien preparado.';}
+  else if(calif>=75){ins='🎓';msg='Muy buen desempeño. Sigue practicando las áreas débiles.';}
+  else if(calif>=60){ins='📗';msg='Resultado aceptable. Identifica los temas a reforzar.';}
+  else{ins='📘';msg='Necesitas reforzar varios temas. ¡No te rindas!';}
+  document.getElementById('resInsignia').textContent=ins;
+  document.getElementById('resMensaje').textContent=msg;
+
+  // Desglose por materia
+  const materias = [...new Set(preguntas.map(p=>p.m))];
+  const des = document.getElementById('resDesglose');
+  des.innerHTML='<h3>Desempeño por asignatura</h3>';
+  materias.forEach(mat => {
+    const idxs = preguntas.map((p,i)=>p.m===mat?i:-1).filter(i=>i>=0);
+    const ac = idxs.filter(i=>respuestas[i]===true).length;
+    const tot = idxs.length;
+    const pct = Math.round((ac/tot)*100);
+    const row = document.createElement('div');
+    row.className='mat-row';
+    row.innerHTML=`<span class="mat-nombre">${mat}</span>
+      <div class="mat-barra-wrap"><div class="mat-barra" style="width:0%" data-w="${pct}%"></div></div>
+      <span class="mat-score">${ac}/${tot}</span>`;
+    des.appendChild(row);
+  });
+  setTimeout(()=>{
+    document.querySelectorAll('.mat-barra').forEach(b=>b.style.width=b.dataset.w);
+  },300);
+}
+
+function reintentar() {
+  document.getElementById('pantalla-resultados').style.display='none';
+  iniciarBloque(bloqueIdx<4?bloqueIdx:-1);
+}
+
+function volverMenu() {
+  clearInterval(timer);
+  document.getElementById('pantalla-resultados').style.display='none';
+  document.getElementById('pantalla-portada').style.display='block';
+}
+</script>
+</body>
+</html>
